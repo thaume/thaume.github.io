@@ -1,0 +1,246 @@
+---
+layout: post
+title: NodeJS streaming files to Amazon S3
+date: 2014-02-12 16:16:51.000000000 +01:00
+categories:
+- NodeJS
+tags:
+- aws
+- nodejs
+- S3
+- streams
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _zilla_image_ids: 'false'
+  _zilla_quote_quote: ''
+  _zilla_link_url: ''
+  _zilla_video_height: ''
+  _zilla_video_m4v: ''
+  _zilla_video_ogv: ''
+  _zilla_video_poster_url: ''
+  _zilla_video_embed_code: ''
+  _zilla_audio_mp3: ''
+  _zilla_audio_ogg: ''
+  _zilla_audio_poster_url: ''
+  _zilla_audio_height: ''
+  _zilla_seo_title: NodeJS streaming files to Amazon S3
+  _zilla_seo_description: This blog post shows a technique to upload files directly
+    to amazon S3 without having to create temporary files on the system.
+  _zilla_seo_keywords: nodejs, aws, knox, streams, busboy
+  _zilla_seo_robots_index: '0'
+  _zilla_seo_robots_follow: '0'
+  s3-stream-config: "{\r\n  \"aws\": {\r\n    \"AWS_ACCESS_KEY_ID\": \"YOUR_AWS_ACCESS_KEY_ID\",\r\n
+    \   \"AWS_SECRET_ACCESS_KEY\": \"YOUR_AWS_SECRET_ACCESS_KEY\",\r\n    \"S3_BUCKET_NAME\":
+    \"YOUR_S3_BUCKET_NAME\"\r\n  }\r\n}"
+  s3-stream-route: "var awsUpload = require('../services/aws-streaming');\r\n\r\n//
+    Index route\r\n// ===========\r\nexports.index = function(req, res){\r\n  if (req.method
+    === 'POST') {\r\n    return awsUpload(req, function(err, url) {\r\n      res.end('<html><head></head><body>\\\r\n
+    \                <h1>All good !</h1>\\\r\n              </body></html>');\r\n
+    \   });\r\n  }\r\n\r\n  res.writeHead(200, { Connection: 'close' });\r\n  res.end('<html><head></head><body>\\\r\n
+    \            <form method=\"POST\" enctype=\"multipart/form-data\">\\\r\n              <input
+    type=\"file\" name=\"filefield\"><br />\\\r\n              <input type=\"submit\">\\\r\n
+    \           </form>\\\r\n          </body></html>');\r\n};"
+  s3-stream-console: "$ npm install\r\n\r\n$ npm install --save busboy // data form
+    parser\r\n\r\n$ npm install --save connect-busboy // busboy middleware\r\n\r\n$
+    npm install --save knox // S3 client\r\n\r\n$ mkdir /services/\r\n\r\n$ touch
+    /services/aws-streaming.js"
+  s3-stream-middleware: "var busboy = require('connect-busboy');\r\n\r\n...\r\n\r\napp.use(busboy());\r\napp.use(express.methodOverride());\r\napp.use(app.router);"
+  s3-stream-length: "req.busboy.on('file', function(fieldname, file, filename, encoding,
+    mimetype) {\r\n    if (!filename) {\r\n      // If filename is not truthy it means
+    there's no file\r\n      return;\r\n    }\r\n    // Create the initial array containing
+    the stream's chunks\r\n    file.fileRead = [];\r\n\r\n    file.on('data', function(chunk)
+    {\r\n      // Push chunks into the fileRead array\r\n      this.fileRead.push(chunk);\r\n
+    \   });\r\n\r\n    file.on('error', function(err) {\r\n      console.log('Error
+    while buffering the stream: ', err);\r\n    });\r\n\r\n    file.on('end', function()
+    {\r\n      // Concat the chunks into a Buffer\r\n      var finalBuffer = Buffer.concat(this.fileRead);\r\n\r\n
+    \     req.files[fieldname] = {\r\n        buffer: finalBuffer,\r\n        size:
+    finalBuffer.length,\r\n        filename: filename,\r\n        mimetype: mimetype\r\n
+    \     };\r\n\r\n    });\r\n  });"
+  s3-stream-randomname: "// Generate date based folder prefix\r\nvar datePrefix =
+    moment().format('YYYY[/]MM');\r\nvar key = crypto.randomBytes(10).toString('hex');\r\nvar
+    hashFilename = key + '-' + filename;\r\n\r\nvar pathToArtwork = '/artworks/' +
+    datePrefix + '/' + hashFilename;"
+  s3-stream-headers: "var headers = {\r\n    'Content-Length': req.files[fieldname].size,\r\n
+    \   'Content-Type': req.files[fieldname].mimetype,\r\n    'x-amz-acl': 'public-read'\r\n};"
+  s3-stream-putbuffer: "Knox.aws.putBuffer( req.files[fieldname].buffer, pathToArtwork,
+    headers, function(err, response){\r\n  if (err) {\r\n    console.error('error
+    streaming image: ', new Date(), err);\r\n    return next(err);\r\n  }\r\n  if
+    (response.statusCode !== 200) {\r\n    console.error('error streaming image: ',
+    new Date(), err);\r\n    return next(err);\r\n  }\r\n  console.log('Amazon response
+    statusCode: ', response.statusCode);\r\n  console.log('Your file was uploaded');\r\n
+    \ next();\r\n});"
+  _thumbnail_id: '290'
+  dsq_thread_id: '2908083894'
+author:
+  login: thaumeSylvere
+  email: tom.coquereau@gmail.com
+  display_name: Tom Coquereau
+  first_name: ''
+  last_name: ''
+---
+<p><span style="line-height: 1.5em;">In this blog post I want to take a look at a way to upload files directly to amazon S3 without having to create temporary files on the system. I will use </span><a style="line-height: 1.5em;" title="knox" href="https://github.com/LearnBoost/knox">knox</a><span style="line-height: 1.5em;"> (a nodejs client to upload objects to amazon S3) and </span><a style="line-height: 1.5em;" title="busboy" href="https://github.com/mscdex/busboy">busboy</a><span style="line-height: 1.5em;"> (a fast </span><span style="line-height: 1.5em;">streaming parser for HTML form data</span><span style="line-height: 1.5em;">)</span><span style="line-height: 1.5em;">. You will find the final code of this post in <a title="s3-streaming repo" href="https://github.com/thaume/s3-streaming">this github repo</a>.</span></p>
+
+<h2>Setting up the ExpressJS app</h2>
+<h3>Installing dependencies</h3>
+<p>After creating your Express project you'll need to run these commands in your terminal to get all the modules and set up our file where we'll handle file upload (remember to run these commands from the root directory fo your newly created express app).</p>
+
+{% highlight bash %}
+$ npm install
+
+$ npm install --save busboy // data form parser
+
+$ npm install --save connect-busboy // busboy middleware
+
+$ npm install --save knox // S3 client
+
+$ mkdir /services/
+
+$ touch /services/aws-streaming.js
+{% endhighlight %}
+
+<h3>Get our app to communicate with S3</h3>
+<p>First you'll need to set your S3 credentials in order for our app to be able to communicate with your S3 bucket. They belong in the config file, which is in `app/config/development.json` and looks like this:</p>
+
+{% highlight javascript %}
+{
+  "aws": {
+    "AWS_ACCESS_KEY_ID": "YOUR_AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY": "YOUR_AWS_SECRET_ACCESS_KEY",
+    "S3_BUCKET_NAME": "YOUR_S3_BUCKET_NAME"
+  }
+}
+{% endhighlight %}
+
+<p>We'll use this config file later in our file handler function.</p>
+<h2>Setting up our route in Express</h2>
+<p>We will only need one route that will both handle the GET and POST request from our webview. This is just for the sake of making something simple, you shouldn't (in my opinion) use such a route for a production app. In `routes/index.js` we have:</p>
+
+{% highlight javascript %}
+var awsUpload = require('../services/aws-streaming');
+
+// Index route
+// ===========
+exports.index = function(req, res){
+  if (req.method === 'POST') {
+    return awsUpload(req, function(err, url) {
+      res.end('<html><head></head><body>\
+                 <h1>All good !</h1>\
+              </body></html>');
+    });
+  }
+
+  res.writeHead(200, { Connection: 'close' });
+  res.end('<html><head></head><body>\
+             <form method="POST" enctype="multipart/form-data">\
+              <input type="file" name="filefield"><br />\
+              <input type="submit">\
+            </form>\
+          </body></html>');
+};
+{% endhighlight %}
+
+<p>Our index route responds with an html form if the request is not a POST. If the request is a POST, it will first upload the file sent from the browser to S3 and then render a success message to the webview.</p>
+<h2>Parsing a form-data with Busboy</h2>
+<p>The app is now ready to send our file to S3. If you try to send a file right now, you will get nothing, even if you try to inspect the 'req.body' property (supposed to contain what was sent from the browser). That is because you need to parse the content sent from the browser, to do that we'll use Busboy which handles files upload.</p>
+<h3>Setting the Busboy middleware</h3>
+<p>In our `app.js` file, we set a couple of things: routes, middlewares, app variables and we also start the server from here. What's interesting to us right now is the middleware stack:</p>
+
+{% highlight javascript %}
+var busboy = require('connect-busboy');
+
+...
+
+app.use(busboy());
+app.use(express.methodOverride());
+app.use(app.router);
+{% endhighlight %}
+
+<p>In case you followed the '<a title="Do not use the bodyParse in express" href="http://andrewkelley.me/post/do-not-use-bodyparser-with-express-js.html">Do not use the bodyParse in express</a>' series of posts, the main difference with the bodyParse middleware is that Busboy will never write temporary files to the filesystem. The problem with writing files to the filesystem on every file upload is that you can overwhelm your server with useless temporary files. Busboy uses streams2 all the way and doesn't block your filesystem. The fact that it doesn't do I/O means better performances too.</p>
+<p>Here we set busboy as a middleware ('busboy-connect') so that it handles every file upload that comes toward the server. It means that it will create streams for each file, you will be able to listen to this streams as you'll find later in this blog post.</p>
+<h3>Handling files</h3>
+<p>Now we need to get the file and send it to S3. Sounds easy since Busboy does handle the whole thing right?</p>
+<p>Well, there's still a little work to be done: S3 needs a 'content-length' header to be set otherwise the upload will not complete. Streams by definition do not have 'content-length' or length. Which means we need to find the streams length before sending it over to S3. The strategy I use here is simple: buffer the stream to get its length.</p>
+
+{% highlight javascript %}
+req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+    if (!filename) {
+      // If filename is not truthy it means there's no file
+      return;
+    }
+    // Create the initial array containing the stream's chunks
+    file.fileRead = [];
+
+    file.on('data', function(chunk) {
+      // Push chunks into the fileRead array
+      this.fileRead.push(chunk);
+    });
+
+    file.on('error', function(err) {
+      console.log('Error while buffering the stream: ', err);
+    });
+
+    file.on('end', function() {
+      // Concat the chunks into a Buffer
+      var finalBuffer = Buffer.concat(this.fileRead);
+
+      req.files[fieldname] = {
+        buffer: finalBuffer,
+        size: finalBuffer.length,
+        filename: filename,
+        mimetype: mimetype
+      };
+
+    });
+  });
+{% endhighlight %}
+
+<p>The resulting object (req.files[fieldname]) now features all the requirements of S3.</p>
+<h3>Unique filename</h3>
+<p>Before sending the file, let's imagine that we want to have a strategy to always have different file names (if you send two files with the same file name, S3 will erase the older one). With the following technique, you will always have different file names:</p>
+
+{% highlight javascript %}
+// Generate date based folder prefix
+var datePrefix = moment().format('YYYY[/]MM');
+var key = crypto.randomBytes(10).toString('hex');
+var hashFilename = key + '-' + filename;
+
+var pathToArtwork = '/artworks/' + datePrefix + '/' + hashFilename;
+{% endhighlight %}
+
+<p>We'll now save files in a month and a day folder, following this pattern: `/artwork/[MONTH]/[DAY]/[random-number]filename`. This might not sound so important, but you need to know that S3 is much more efficient when you create a hierarchy of files rather than just putting all files at the same level and if you want to scale a bit, you'll need random naming to avoid files erasing others.</p>
+<h3>Setting headers</h3>
+<p>We then need to fix the headers for the request to be valid for S3 ('x-amz-acl' makes the image readable by anyone with its URL, that's what you want to use for most images):</p>
+
+{% highlight javascript %}
+var headers = {
+    'Content-Length': req.files[fieldname].size,
+    'Content-Type': req.files[fieldname].mimetype,
+    'x-amz-acl': 'public-read'
+};
+{% endhighlight %}
+
+<p>Once the headers are set, we have all the data and information needed to push our file to our S3 bucket.</p>
+<h3>Sending files to S3</h3>
+<p>To put our newly created Buffer to S3, we'll need to use Knox at the end of our `req.busboy.on('file')` callback (after the headers setup):</p>
+
+{% highlight javascript %}
+Knox.aws.putBuffer( req.files[fieldname].buffer, pathToArtwork, headers, function(err, response){
+  if (err) {
+    console.error('error streaming image: ', new Date(), err);
+    return next(err);
+  }
+  if (response.statusCode !== 200) {
+    console.error('error streaming image: ', new Date(), err);
+    return next(err);
+  }
+  console.log('Amazon response statusCode: ', response.statusCode);
+  console.log('Your file was uploaded');
+  next();
+});
+{% endhighlight %}
+
+<p>Here we use the putBuffer method of Knox (<a title="putBuffer" href="https://github.com/LearnBoost/knox#put">https://github.com/LearnBoost/knox#put</a>) and we then call `next()` once S3 responds with a 200 status code and... voilà! Check your S3 bucket, your file should be there ready to be used!</p>
+<p>You will find the final code of this post in <a title="s3-streaming repo" href="https://github.com/thaume/s3-streaming">this github repo</a>.</p>

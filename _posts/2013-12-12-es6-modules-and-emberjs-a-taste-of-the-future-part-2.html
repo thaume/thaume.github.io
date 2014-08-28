@@ -1,0 +1,143 @@
+---
+layout: post
+title: 'ES6 modules and EmberJS : a taste of the future (part 2)'
+date: 2013-12-12 01:29:52.000000000 +01:00
+categories:
+- EmberJS
+- ES6
+tags:
+- emberjs
+- es6
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _zilla_image_ids: 'false'
+  _zilla_quote_quote: ''
+  _zilla_link_url: ''
+  _zilla_video_height: ''
+  _zilla_video_m4v: ''
+  _zilla_video_ogv: ''
+  _zilla_video_poster_url: ''
+  _zilla_video_embed_code: ''
+  _zilla_audio_mp3: ''
+  _zilla_audio_ogg: ''
+  _zilla_audio_poster_url: ''
+  _zilla_audio_height: ''
+  _zilla_seo_title: 'ES6 modules and EmberJS : a taste of the future (part 2)'
+  _zilla_seo_description: Second part of the two blog post series, we are now dealing
+    with a real EmberJS application and see how it works with ES6 modules
+  _zilla_seo_keywords: Ember, Ember js, EmberJS, ES6 modules, Ember modules
+  _zilla_seo_robots_index: '0'
+  _zilla_seo_robots_follow: '0'
+  _thumbnail_id: '121'
+  application-structure: "app /\r\n|---- app.js\r\n|---- router.js\r\n|---- helpers
+    /\r\n|-------- mail-date.js\r\n|---- models /\r\n|-------- mailbox.js\r\n|----
+    routes /\r\n|-------- application.js\r\n|-------- mail.js\r\n|---- templates /\r\n|--------
+    application.hbs\r\n|-------- index.hbs\r\n|-------- mail.hbs\r\n|-------- mailbox.hbs\r\n|--------
+    maibox /\r\n|------------ index.hbs"
+  application-router: "var Router = Ember.Router.extend(); // ensure we don't share
+    routes between all Router instances\r\n\r\nRouter.map(function() {\r\n  this.resource('mailbox',
+    { path: '/:mailbox_id' }, function() {\r\n    this.resource('mail', { path: '/:message_id'
+    });\r\n  });\r\n});\r\n\r\nexport default Router;"
+  application-route: "import Mailbox from 'appkit/models/mailbox';\r\n\r\nvar ApplicationRoute
+    = Em.Route.extend({\r\n  model: function() {\r\n    return Mailbox.find();\r\n
+    \ }\r\n});\r\n\r\nexport default ApplicationRoute;"
+  application-model: "var Mailbox = Em.Object.extend();\r\n\r\nMailbox.reopenClass({\r\n
+    \ find: function(id) {\r\n    if (id) {\r\n      return FIXTURES.findBy('id',
+    id);\r\n    } else {\r\n      return FIXTURES;\r\n    }\r\n  }\r\n});\r\n\r\nexport
+    default Mailbox;\r\n\r\nvar FIXTURES = [\r\n  ...\r\n];"
+  application-mail-route: "var MailRoute = Em.Route.extend({\r\n  model: function(params)
+    {\r\n    return this.modelFor('mailbox').messages.findBy('id', params.message_id);\r\n
+    \ }\r\n});\r\n\r\nexport default MailRoute;"
+  application-app: "import Resolver from 'resolver';\r\n\r\nvar App = Ember.Application.extend({\r\n
+    \ LOG_ACTIVE_GENERATION: true,\r\n  LOG_MODULE_RESOLVER: true,\r\n  LOG_TRANSITIONS:
+    true,\r\n  LOG_TRANSITIONS_INTERNAL: true,\r\n  LOG_VIEW_LOOKUPS: true,\r\n  modulePrefix:
+    'appkit',\r\n  Resolver: Resolver['default'],\r\n  rootElement: \"#target\"\r\n});\r\n\r\nEmber.RSVP.configure('onerror',
+    function(error) {\r\n  if (error instanceof Error) {\r\n    Ember.Logger.assert(false,
+    error);\r\n    Ember.Logger.error(error.stack);\r\n  }\r\n});\r\n\r\nexport default
+    App;"
+  application-hbs-application: "<div class=\"url\">URL: {{target.url}}</div>\r\n<aside>\r\n
+    \   <ul>\r\n        <li><h2>Mailboxes</h2></li>\r\n        {{#each}}\r\n            <li>\r\n
+    \               {{#link-to \"mailbox\" this currentWhen=\"mailbox\"}}\r\n                    <span
+    class=\"count\">\r\n                        {{messages.length}}\r\n                    </span>\r\n
+    \                   {{name}}\r\n                {{/link-to}}\r\n            </li>\r\n
+    \       {{/each}}\r\n    </ul>\r\n</aside>\r\n\r\n<section class=\"main\">\r\n
+    \   {{outlet}}\r\n</section>"
+  application-hbs-index: "<div class=\"index\">\r\n  <h1>TomsterMail</h1>\r\n  <span
+    class=\"tomster\"></span>\r\n</div>"
+  application-hbs-mail: "<div class=\"mail\">\r\n  <dl>\r\n      <dt>From</dt>\r\n
+    \     <dd>{{from}}</dd>\r\n      <dt>To</dt>\r\n      <dd>{{to}}</dd>\r\n      <dt>Date</dt>\r\n
+    \     <dd>{{mail-date date}}</dd>\r\n  </dl>\r\n  <h4>{{subject}}</h4>\r\n  <p>{{body}}</p>\r\n</div>"
+  application-hbs-mailbox: "<table>\r\n    <tr>\r\n        <th>Date</th>\r\n        <th>Subject</th>\r\n
+    \       <th>From</th>\r\n        <th>To</th>\r\n    </tr>\r\n\r\n    {{#each messages}}\r\n
+    \       {{#link-to \"mail\" this tagName='tr'}}\r\n            <td>{{mail-date
+    date}}</td>\r\n            <td>{{view.isActive}}{{subject}}</td>\r\n            <td>{{from}}</td>\r\n
+    \           <td>{{to}}</td>\r\n        {{/link-to}}\r\n        </tr>\r\n    {{/each}}\r\n</table>\r\n\r\n{{outlet}}"
+  application-hbs-mailbox-index: "<div class=\"mailbox-index\">\r\n  Select an email\r\n</div>"
+  application-call-ember: "<script>window.App = require('appkit/app')[\"default\"].create();</script>"
+  dsq_thread_id: '2044730150'
+author:
+  login: thaumeSylvere
+  email: tom.coquereau@gmail.com
+  display_name: Tom Coquereau
+  first_name: ''
+  last_name: ''
+---
+<p>EmberJS does not have a built-in module system per-se and the community is now pushing toward ES6 modules as the standard for creating applications with EmberJS.</p>
+<p><a href="http://thau.me/wp-content/uploads/2013/12/ember-structure-sm.png"><img class="aligncenter" alt="ember-structure-sm" src="/assets/img/ember-structure-sm.png" width="193" height="184" /></a></p>
+<p>I've been looking at the Ember App Kit (EAK) for a couple of weeks now, and I'm solving big problems with it ! Both in terms of productivity and scalability. Creating AMD modules with Ember's conventions becomes a breeze to write thanks to the Resolver shipped with EAK. You first need to understand how things work, how files make sense together... but once you'll get that, you'll start to love it.</p>
+<p>For instance your route <code class="language-markup"><span class="token tag">routes/users.js</span></code> will know to use the controller in <code class="language-markup"><span class="token tag">controllers/users.js</span></code> and the template in <code class="language-markup"><span class="token tag">templates/users.hbs</span></code>. You might want to manually add a model somewhere, you can use an <code class="language-javascript"><span class="token tag">import</span></code> statement to get the job done !</p>
+<h2>Nuff' talk ! Gimme some code !</h2>
+<p>All right, all right, we'll implement the "Mailbox" example from the EmberJS website using ES6 modules, sounds good ? Keep reading ;) Clone the git <a href="https://github.com/thaume/emberjs-es6-modules/tree/ember-es6-1">repo</a> and follow me !</p>
+<p>Here is the structure we'll need (for the <strong>app/</strong> folder) :</p>
+<p>[prism key="application-structure" language="markup"]</p>
+<p>Simple right ? Well that's enough to get the party startin' ! Keep in mind that for ES6 modules, only the paths matters : what you were used to name 'UsersRoute.js' will become 'route/users.js'.</p>
+<h2>The router</h2>
+<p>The router is the heart of our application, here is how it looks with ES6 modules :</p>
+<p>[prism key="application-router" language="javascript"]</p>
+<p>We declare a local variable Router (local in the module) and then export it to make it reachable as a module. We declared two routes :</p>
+<ol>
+<li>"mailbox", resolving to /:mailbox_id</li>
+<li>"mail", resolving to /:message_id</li>
+</ol>
+<p>The dynamic parts of the URL will be the different filters that we will apply to display the mails (inbox, spam, sent mail).</p>
+<h2>The routes</h2>
+<p>We need to define a behavior for the routes we just mapped to our Router, for that we'll need :</p>
+<ol>
+<li>The application route callback : [prism key="application-route" language="javascript"]</li>
+<li>The mail route callback :  [prism key="application-mail-route" language="javascript"]</li>
+</ol>
+<p>We need to import the model 'mailbox' to be able to query all the messages in the application route, but we can use the <code class="language-javascript"><span class="token tag">modelFor('mailbox');</span></code> method in the mail route to use the model of mailbox which was imported as context in the <code class="language-markup"><span class="token tag">{{#link-to}}</span></code> as you'll see later in the application.hbs, mailbox.hbs templates.</p>
+<h2>The model</h2>
+<p>In the application route, we had to import the model Mailbox in order to query all the messages of our mailbox. Here is the model :</p>
+<p>[prism key="application-model" language="javascript"]</p>
+<p>Here we created an object model that will give the data to the route. We've been able to import this model in the application route thanks to the <code class="language-javascript"><span class="token tag">export default Mailbox</span></code>. I didn't wanted to display the FIXTURES but you'll find them in the repo I gave you at the beginning of the article.</p>
+<h2>Templates</h2>
+<p><strong>application.hbs:</strong> The first template that will be rendered is application.hbs, on the root URL <code class="language-markup"><span class="token tag">/</span></code> . Ember will automatically link the template to the route based on names, and application.hbs + index.hbs come as the "default frame" when you kickstart an application :</p>
+<p>[prism key="application-hbs-application" language="markup"]</p>
+<p><strong>index.hbs:</strong> Then Ember will request the index.hbs template and will render it in the {{outlet}} of application.hbs:</p>
+<p>[prism key="application-hbs-index" language="markup"]</p>
+<p><strong>mailbox.hbs: </strong>Once you'll click on either 'inbox', 'spam' or 'sent mail' (links that will be displayed in the {{#link-to}} area in application.hbs), the mailbox.hbs template will be called and displayed in the outlet of application.hbs :</p>
+<p>[prism key="application-hbs-mailbox" language="markup"]</p>
+<p><strong>mailbox/index.hbs: </strong>The mailbox/index.hbs template will be rendered as the default template in the {{outlet}} of mailbox.hbs</p>
+<p>[prism key="application-hbs-mailbox-index" language="markup"]</p>
+<p><strong>mail.hbs: </strong>And then, once you'll click on one of those mails you've received, the mail.hbs template will be rendered and populated with the mail's data</p>
+<p>[prism key="application-hbs-mail" language="markup"]</p>
+<p>The templates are processed by the grunt task <code class="language-markup"><span class="token tag">grunt-ember-template</span></code>, you should not have to worry about that, just use the classic Ember's conventions names for your templates (just remember to switch to a pathname style convention).</p>
+<p>We now have everything we need to kickstart our app, let's write the <code class="language-markup"><span class="token tag">app.js</span></code> and unleash Ember !</p>
+<h2>App.js</h2>
+<p>Our app.js file is the entry point of our application, where we create the application and launch the Resolver (all the LOG_* are for debug purpose):</p>
+<p>[prism key="application-app" language="javascript"]</p>
+<p>Once all your modules are exported, they will go throught the Resolver and will be given the place they should have : the router, the routes, the templates, the helpers... It is all (almost) magical and forces you to be idiomatic in many ways (You will not be able to call a global controller in a template, you'll have to make things clean).</p>
+<p><strong>One last thing: </strong>for now, you'll need to call explicitely the app.js default method in your index.html :</p>
+<p>[prism key="application-call-ember" language="markup"]</p>
+<p>The last thing you need to do now is to run <code class="language-bash"><span class="token tag">grunt server</span></code> in your terminal (from the root of the <a title="ES6 modules and ember js" href="https://github.com/thaume/emberjs-es6-modules">git you cloned</a>), and let the Ember App Kit drive you throught ES6 modules transpiled to AMD inside of your browser, have fun !</p>
+<p>I want a <a title="emberjs and es6 demo" href="http://thau.me/demo/emberjs-es6/">DEMO LINK</a> !</p>
+<blockquote>
+<ul>
+<li><a title="ES6 modules and EmberJS : a taste of the future (part 1)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-1/">ES6 modules and EmberJS : a taste of the future (part 1)</a></li>
+<li><a title="ES6 modules and EmberJS : a taste of the future (part 2)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-2/">ES6 modules and EmberJS : a taste of the future (part 2)</a></li>
+</ul>
+</blockquote>

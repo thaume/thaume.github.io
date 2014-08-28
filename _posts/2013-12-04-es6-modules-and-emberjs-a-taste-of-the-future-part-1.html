@@ -1,0 +1,111 @@
+---
+layout: post
+title: 'ES6 modules and EmberJS : a taste of the future (part 1)'
+date: 2013-12-04 00:19:54.000000000 +01:00
+categories:
+- EmberJS
+- ES6
+tags:
+- emberjs
+- es6
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _zilla_image_ids: 'false'
+  _zilla_quote_quote: ''
+  _zilla_link_url: ''
+  _zilla_video_height: ''
+  _zilla_video_m4v: ''
+  _zilla_video_ogv: ''
+  _zilla_video_poster_url: ''
+  _zilla_video_embed_code: ''
+  _zilla_audio_mp3: ''
+  _zilla_audio_ogg: ''
+  _zilla_audio_poster_url: ''
+  _zilla_audio_height: ''
+  _zilla_seo_title: 'ES6 modules and EmberJS : a taste of the future'
+  _zilla_seo_description: 'A quick walk throught the fresh ES6 modules spec coupled
+    with the front MVC framework EmberJS '
+  _zilla_seo_keywords: es6, es6 modules, emberjs, ember, ember js, emberjs modules,
+    future of javascript
+  _zilla_seo_robots_index: '0'
+  _zilla_seo_robots_follow: '0'
+  users-app-structure: ''
+  users-app-route: "export default Ember.Route.extend({\r\n  model: function() {\r\n
+    \   return ['John', 'Paul', 'Tom'];\r\n  }\r\n});\r\n\r\n// you could also write\r\nvar
+    UsersRoute = Ember.Route.extend({\r\n  model: function() {\r\n    return ['John',
+    'Paul', 'Tom'];\r\n  }\r\n});\r\n\r\nexport default UsersRoute;"
+  dsq_thread_id: '2023991549'
+  users-app-router: "var Router = Ember.Router.extend();\r\n\r\nRouter.map(function()
+    {\r\n  this.resource('users');\r\n});\r\n\r\nexport default Router;"
+  users-app-template: "<h2>List of users</h2>\r\n<ul>\r\n{{#each}}\r\n  <li>{{this}}</li>\r\n{{/each}}\r\n</ul>"
+  users-app-appjs: "import Resolver from 'resolver';\r\n\r\nvar App = Ember.Application.extend({\r\n
+    \ LOG_ACTIVE_GENERATION: true,\r\n  LOG_MODULE_RESOLVER: true,\r\n  LOG_TRANSITIONS:
+    true,\r\n  LOG_TRANSITIONS_INTERNAL: true,\r\n  LOG_VIEW_LOOKUPS: true,\r\n  modulePrefix:
+    'appkit',\r\n  Resolver: Resolver['default']\r\n});\r\n\r\nEmber.RSVP.configure('onerror',
+    function(error) {\r\n  // ensure unhandled promises raise awareness.\r\n  // may
+    result in false negatives, but visibility is more important\r\n  if (error instanceof
+    Error) {\r\n    Ember.Logger.assert(false, error);\r\n    Ember.Logger.error(error.stack);\r\n
+    \ }\r\n});\r\n\r\nexport default App;"
+  _thumbnail_id: '121'
+  es6-mod-import-direct: "// tasks/lib/prefix.js\r\nlet willNotBeExported = 'xyz';\r\nexport
+    function prefix(x) {\r\n    return prefixConf + x;\r\n}\r\nexport let prefixConf
+    = 'app-';"
+  es6-mod-import-deffered: "// tasks/lib/prefix.js\r\nlet willNotBeExported = 143;\r\nfunction
+    prefix(x) {\r\n    return prefixConf + x;\r\n}\r\nlet prefixConf = 'app-';\r\n\r\nexport
+    { prefix, prefixConf };"
+  es6-mod-import-folders: "tasks/\r\n    lib/\r\n        prefix.js\r\n    main.js"
+  es6-mod-import-import: "// tasks/main.js\r\nimport { prefix } from 'lib/prefix';\r\nconsole.log(
+    prefix('users-model') );\r\n// The function will prefix 'users-model' with 'app-'\r\n//
+    => app-users-model"
+  es6-mod-import-default: "// tasks/lib/prefix.js\r\nlet willNotBeExported = 143;\r\nfunction
+    prefix(x) {\r\n    return prefixConf + x;\r\n}\r\nlet prefixConf = 'app-';\r\n\r\nexport
+    default prefix;"
+  es6-mod-import-default-import: "// tasks/main.js\r\nimport prefix from 'lib/prefix';\r\nconsole.log(
+    prefix('users-model') );\r\n// The function will prefix 'users-model' with 'app-'\r\n//
+    => app-users-model"
+author:
+  login: thaumeSylvere
+  email: tom.coquereau@gmail.com
+  display_name: Tom Coquereau
+  first_name: ''
+  last_name: ''
+---
+<p>These two articles blog post series is a little walk alongside ES6 modules and EmberJS. We'll try some simple ES6 modules examples in the first part and then focus on how EmberJS is eventually getting real modules. (A minimal understanding of EmberJS might be required for part2).</p>
+<ul>
+<li><a title="ES6 modules and EmberJS : a taste of the future (part 1)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-1/">ES6 modules and EmberJS : a taste of the future (part 1)</a></li>
+<li><a title="ES6 modules and EmberJS : a taste of the future (part 2)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-2/">ES6 modules and EmberJS : a taste of the future (part 2)</a></li>
+</ul>
+<h2>import { module } from 'es6/spec';</h2>
+<p>The ES.current as we know it doesn't feature a standardized module system, you cannot require some fragment of code inside another fragment of code and use it while being inside a namespace (and not a global). AMD and CommonJS came along and proposed two impressive yet incompatible solutions to let developers use modules (AMD is mostly used in the browser, while CommonJS is more used server-side). The new ES6 modules spec aims at solving this module problem and also let ES6 modules transpile to both AMD and CommonJS as a polyfill.</p>
+<p>The ES6 modules spec is <a title="ES6 spec is done" href="https://speakerdeck.com/dherman/status-report-es6-modules">done</a> and will not change before the ES6 specs release, we can now use it and feel safe about the new semantic we learn.</p>
+<blockquote><p>But hey, what about Chrome31 ?</p></blockquote>
+<p>Fragmentation is our job, that's for sure ! ES6 modules do not work in any browser as of today but AMD works everywhere and ES6 transpiler do transpile to AMD. That's the cool news about ES6 modules : there is already a lot of cool tool that enable us to transpile ES6 modules into AMD/requireJS and use it in the browser !</p>
+<h2>Enter ES6 modules</h2>
+<p>To be able to import some code, you'll first need to export it so that it becomes available for the import commands. Let's start with a simple module structured that way :</p>
+<p>[prism key="es6-mod-import-folders" language="markup"]</p>
+<h3>export</h3>
+<p>Remember that only the file's path matters when you want to import a fragment of code somewhere, you'll understand that with the following examples. You can directly import a function that way:</p>
+<p>[prism key="es6-mod-import-direct" language="javascript"]</p>
+<p>Note that we exported a function and a variable, but all the variables in the file are accessible from within the file: the <code class=" language-javascript"><span class="token tag">let willNotBeExported</span></code> variable is still accessible inside the function.</p>
+<p>You can also perform the same export at the end of your file, it is the same thing really :</p>
+<p>[prism key="es6-mod-import-deffered" language="javascript"]</p>
+<p>We now have a <code class=" language-javascript"><span class="token tag">let prefixConf</span></code> variable and a <code class=" language-javascript" style="font-size: 13px; line-height: 19px;"><span class="token tag">function prefix(){...}</span></code> exported.</p>
+<h3>import</h3>
+<p>Let's import our module from lib/prefix into our main.js and use our prefix function from within tasks/main.js :</p>
+<p>[prism key="es6-mod-import-import" language="javascript"]</p>
+<p>With the module system, I can now use functions defined somewhere else without putting everything in a global scope, this really helps to create better code.</p>
+<h3>export default</h3>
+<p>In the following EmberJs examples, we'll use the simple <code class=" language-markup"><span class="token tag">export default</span></code> way of exporting modules. It is almost the same as what we saw just before, the only difference being that you can only import one entity from the module. It goes like this:</p>
+<p>[prism key="es6-mod-import-default" language="javascript"]</p>
+<p>When importing an export default, you do not need to use the braces :</p>
+<p>[prism key="es6-mod-import-default-import" language="javascript"]</p>
+<p>You can find the code on my github account <a title="es6 modules transpiling code" href="https://github.com/thaume/es6-modules-experiment">here</a>.</p>
+<p>That information should be enough for the next part: the Ember App-Kit ES6 module powered app !</p>
+<ul>
+<li><a title="ES6 modules and EmberJS : a taste of the future (part 1)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-1/">ES6 modules and EmberJS : a taste of the future (part 1)</a></li>
+<li><a title="ES6 modules and EmberJS : a taste of the future (part 2)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-2/">ES6 modules and EmberJS : a taste of the future (part 2)</a></li>
+</ul>
+<p>&nbsp;</p>
