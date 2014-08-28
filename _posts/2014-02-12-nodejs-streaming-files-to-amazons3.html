@@ -32,47 +32,6 @@ meta:
   _zilla_seo_keywords: nodejs, aws, knox, streams, busboy
   _zilla_seo_robots_index: '0'
   _zilla_seo_robots_follow: '0'
-  s3-stream-config: "{\r\n  \"aws\": {\r\n    \"AWS_ACCESS_KEY_ID\": \"YOUR_AWS_ACCESS_KEY_ID\",\r\n
-    \   \"AWS_SECRET_ACCESS_KEY\": \"YOUR_AWS_SECRET_ACCESS_KEY\",\r\n    \"S3_BUCKET_NAME\":
-    \"YOUR_S3_BUCKET_NAME\"\r\n  }\r\n}"
-  s3-stream-route: "var awsUpload = require('../services/aws-streaming');\r\n\r\n//
-    Index route\r\n// ===========\r\nexports.index = function(req, res){\r\n  if (req.method
-    === 'POST') {\r\n    return awsUpload(req, function(err, url) {\r\n      res.end('<html><head></head><body>\\\r\n
-    \                <h1>All good !</h1>\\\r\n              </body></html>');\r\n
-    \   });\r\n  }\r\n\r\n  res.writeHead(200, { Connection: 'close' });\r\n  res.end('<html><head></head><body>\\\r\n
-    \            <form method=\"POST\" enctype=\"multipart/form-data\">\\\r\n              <input
-    type=\"file\" name=\"filefield\"><br />\\\r\n              <input type=\"submit\">\\\r\n
-    \           </form>\\\r\n          </body></html>');\r\n};"
-  s3-stream-console: "$ npm install\r\n\r\n$ npm install --save busboy // data form
-    parser\r\n\r\n$ npm install --save connect-busboy // busboy middleware\r\n\r\n$
-    npm install --save knox // S3 client\r\n\r\n$ mkdir /services/\r\n\r\n$ touch
-    /services/aws-streaming.js"
-  s3-stream-middleware: "var busboy = require('connect-busboy');\r\n\r\n...\r\n\r\napp.use(busboy());\r\napp.use(express.methodOverride());\r\napp.use(app.router);"
-  s3-stream-length: "req.busboy.on('file', function(fieldname, file, filename, encoding,
-    mimetype) {\r\n    if (!filename) {\r\n      // If filename is not truthy it means
-    there's no file\r\n      return;\r\n    }\r\n    // Create the initial array containing
-    the stream's chunks\r\n    file.fileRead = [];\r\n\r\n    file.on('data', function(chunk)
-    {\r\n      // Push chunks into the fileRead array\r\n      this.fileRead.push(chunk);\r\n
-    \   });\r\n\r\n    file.on('error', function(err) {\r\n      console.log('Error
-    while buffering the stream: ', err);\r\n    });\r\n\r\n    file.on('end', function()
-    {\r\n      // Concat the chunks into a Buffer\r\n      var finalBuffer = Buffer.concat(this.fileRead);\r\n\r\n
-    \     req.files[fieldname] = {\r\n        buffer: finalBuffer,\r\n        size:
-    finalBuffer.length,\r\n        filename: filename,\r\n        mimetype: mimetype\r\n
-    \     };\r\n\r\n    });\r\n  });"
-  s3-stream-randomname: "// Generate date based folder prefix\r\nvar datePrefix =
-    moment().format('YYYY[/]MM');\r\nvar key = crypto.randomBytes(10).toString('hex');\r\nvar
-    hashFilename = key + '-' + filename;\r\n\r\nvar pathToArtwork = '/artworks/' +
-    datePrefix + '/' + hashFilename;"
-  s3-stream-headers: "var headers = {\r\n    'Content-Length': req.files[fieldname].size,\r\n
-    \   'Content-Type': req.files[fieldname].mimetype,\r\n    'x-amz-acl': 'public-read'\r\n};"
-  s3-stream-putbuffer: "Knox.aws.putBuffer( req.files[fieldname].buffer, pathToArtwork,
-    headers, function(err, response){\r\n  if (err) {\r\n    console.error('error
-    streaming image: ', new Date(), err);\r\n    return next(err);\r\n  }\r\n  if
-    (response.statusCode !== 200) {\r\n    console.error('error streaming image: ',
-    new Date(), err);\r\n    return next(err);\r\n  }\r\n  console.log('Amazon response
-    statusCode: ', response.statusCode);\r\n  console.log('Your file was uploaded');\r\n
-    \ next();\r\n});"
-  _thumbnail_id: '290'
   dsq_thread_id: '2908083894'
 author:
   login: thaumeSylvere
