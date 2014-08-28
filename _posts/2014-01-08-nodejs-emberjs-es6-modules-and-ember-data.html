@@ -1,0 +1,137 @@
+---
+layout: post
+title: NodeJS, EmberJS, ES6 modules and Ember-Data
+date: 2014-01-08 14:12:53.000000000 +01:00
+categories:
+- Ember-Data
+- EmberJS
+- ES6
+- NodeJS
+tags:
+- ember
+- ember-data
+- es6
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _zilla_image_ids: 'false'
+  _zilla_quote_quote: ''
+  _zilla_link_url: ''
+  _zilla_video_height: ''
+  _zilla_video_m4v: ''
+  _zilla_video_ogv: ''
+  _zilla_video_poster_url: ''
+  _zilla_video_embed_code: ''
+  _zilla_audio_mp3: ''
+  _zilla_audio_ogg: ''
+  _zilla_audio_poster_url: ''
+  _zilla_audio_height: ''
+  _zilla_seo_title: EmberJS, ES6 modules and Ember-Data
+  _zilla_seo_description: Putting the ‘mailbox' example of the emberjs.com website
+    on steroïds with Ember-Data and ES6 modules and query data from NodeJS
+  _zilla_seo_keywords: 'Ember, Ember js, EmberJS, ES6 modules, Ember modules, Ember-Data,
+    ember data, express, '
+  _zilla_seo_robots_index: '0'
+  _zilla_seo_robots_follow: '0'
+  _thumbnail_id: '220'
+  application-adapter: "var ApplicationAdapter = DS.RESTAdapter.extend({\r\n    namespace:
+    'api'\r\n});\r\n\r\nexport default ApplicationAdapter;"
+  application-nodejs-routes: "module.exports = function(server) {\r\n\r\n  // Create
+    an API namespace, so that the root does not\r\n  // have to be repeated for each
+    end point.\r\n  server.namespace('/api', function() {\r\n\r\n    // Return fixture
+    data for '/api/mailboxes'\r\n    server.get('/mailboxes/', function(req, res)
+    {\r\n      var data = { ... }\r\n      res.send(data);\r\n    });\r\n\r\n  });\r\n\r\n};"
+  application-fixtures-json: "{\r\n  \"name\": \"Inbox\",\r\n  \"id\": \"inbox\",\r\n
+    \ \"messages\": [\r\n    {\r\n      \"id\": 1,\r\n      \"subject\": \"Welcome
+    to Ember\",\r\n      \"from\": \"email\",\r\n      \"to\": \"email\",\r\n      \"date\":
+    new Date(),\r\n      \"body\": \"Welcome to Ember. We hope you enjoy your stay\"\r\n
+    \   }, {\r\n      \"id\": 2,\r\n      \"subject\": \"Great Ember Resources\",\r\n
+    \     \"from\": \"email\",\r\n      \"to\": \"email\",\r\n      \"date\": new
+    Date(),\r\n      \"body\": \"Have you seen embercasts.co? How about emberaddons.co?\"\r\n
+    \   }\r\n  ]\r\n}, {\r\n  \"name\": \"Spam\",\r\n  \"id\": \"spam\",\r\n  \"messages\":
+    [\r\n    {\r\n      \"id\": 3,\r\n      \"subject\": \"You have one the lottery!!!111ONEONE\",\r\n
+    \     \"from\": \"email\",\r\n      \"to\": \"email\",\r\n      \"date\": new
+    Date(),\r\n      \"body\": \"You have ONE the lottery! You only have to send us
+    a small amount of monies to claim your prize\"\r\n    }\r\n  ]\r\n}, {\r\n  \"name\":
+    \"Sent Mail\",\r\n  \"id\": \"sent-mail\",\r\n  \"messages\": [\r\n    {\r\n      \"id\":
+    4,\r\n      \"subject\": \"Should I use Ember\",\r\n      \"from\": \"email\",\r\n
+    \     \"to\": \"email\",\r\n      \"date\": new Date(),\r\n      \"body\": \"Ember
+    looks pretty good, should I use it?\"\r\n    }\r\n  ]\r\n}"
+  application-normalizing-messages: "\"messages\": [{\r\n  \"id\": 1,\r\n  \"subject\":
+    \"Welcome to Ember\",\r\n  \"from\": \"email\",\r\n  \"to\": \"email\",\r\n  \"date\":
+    new Date(),\r\n  \"body\": \"Welcome to Ember. We hope you enjoy your stay\"\r\n},
+    {\r\n  \"id\": 2,\r\n  \"subject\": \"Great Ember Resources\",\r\n  \"from\":
+    \"email\",\r\n  \"to\": \"email\",\r\n  \"date\": new Date(),\r\n  \"body\": \"Have
+    you seen embercasts.com? How about emberaddons.com?\"\r\n}, {\r\n  \"id\": 3,\r\n
+    \ \"subject\": \"You have one the lottery!!!111ONEONE\",\r\n  \"from\": \"email\",\r\n
+    \ \"to\": \"email\",\r\n  \"date\": new Date(),\r\n  \"body\": \"You have ONE
+    the lottery! You only have to send us a small amount of monies to claim your prize\"\r\n},
+    {\r\n  \"id\": 4,\r\n  \"subject\": \"Should I use Ember\",\r\n  \"from\": \"email\",\r\n
+    \ \"to\": \"email\",\r\n  \"date\": new Date(),\r\n  \"body\": \"Ember looks pretty
+    good, should I use it?\"\r\n}]"
+  application-normalizing-mailbox: "\"mailbox\": [{\r\n  \"name\": \"Inbox\",\r\n
+    \ \"id\": \"inbox\",\r\n  \"messages\": [\"1\", \"2\"]\r\n}, {\r\n  \"name\":
+    \"Spam\",\r\n  \"id\": \"spam\",\r\n  \"messages\": [\"3\"]\r\n}, {\r\n  \"name\":
+    \"Sent Mail\",\r\n  \"id\": \"sent-mail\",\r\n  \"messages\": [\"4\"]\r\n}]"
+  application-message-model: "var attr = DS.attr;\r\n\r\nvar Message = DS.Model.extend({\r\n
+    \ number: attr(),\r\n  subject: attr(),\r\n  from: attr(),\r\n  to: attr(),\r\n
+    \ date: attr(),\r\n  body: attr()\r\n});\r\n\r\nMessage.idField = 'number';\r\n\r\nexport
+    default Message;"
+  application-mailbox-model: "var attr = DS.attr,\r\n    hasMany = DS.hasMany;\r\n\r\nvar
+    Mailbox = DS.Model.extend({\r\n  number: attr(),\r\n  name: attr(),\r\n  messages:
+    hasMany('message')\r\n});\r\n\r\nMailbox.idField = 'number';\r\n\r\nexport default
+    Mailbox;"
+  application-route-model: "var ApplicationRoute = Em.Route.extend({\r\n  model: function()
+    {\r\n    return this.store.find('mailbox');\r\n  }\r\n});\r\n\r\nexport default
+    ApplicationRoute;"
+  application-template: "<div class=\"url\">URL: {{target.url}}</div>\r\n<aside>\r\n
+    \   <ul>\r\n        <li><h2>Mailboxes</h2></li>\r\n        {{#each}}\r\n            <li>\r\n
+    \               {{#link-to \"mailbox\" this currentWhen=\"mailbox\"}}\r\n                    <span
+    class=\"count\">\r\n                        {{messages.length}}\r\n                    </span>\r\n
+    \                   {{name}}\r\n                {{/link-to}}\r\n            </li>\r\n
+    \       {{/each}}\r\n    </ul>\r\n</aside>\r\n\r\n<section class=\"main\">\r\n
+    \   {{outlet}}\r\n</section>"
+  dsq_thread_id: '2099997928'
+author:
+  login: thaumeSylvere
+  email: tom.coquereau@gmail.com
+  display_name: Tom Coquereau
+  first_name: ''
+  last_name: ''
+---
+<p>In this blog post about EmberJS and Ember-Data, we'll use the example from the <a title="ES6 modules and EmberJS : a taste of the future (part 1)" href="http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-1/">last blog post series</a> (you can find it <a title="emberjs and es6 modules" href="https://github.com/thaume/emberjs-es6-modules">in this git repo</a> on the branch master) and we'll plug in the RESTAdapter in order to get data from an Express server instead of using fixtures. Clone the git repo, and follow me !</p>
+<p><img class="aligncenter size-full wp-image-220" alt="tomster-under-construction" src="/assets/img/tomster-under-construction.png" width="472" height="529" /></p>
+<h2>Getting the RESTAdapter to work</h2>
+<p>The Ember App Kit has a very useful little feature called 'API-stub', it let you create routes on Express and respond with data. We will use this API-stub to create our JSON that we want to send to our Ember app through Ember-Data, so let's configure our ApplicationAdapter, you will find here : <code class="language-markup"><span class="token tag">app/adapters/application.js</span></code></p>
+<p>[prism key="application-adapter" language="javascript"]</p>
+<p>As simple as that, our RESTAdapter is now configured to work with our Express server.</p>
+<h3>Setup the API response in NodeJS</h3>
+<p>The Express server also needs to be configured so that it can talk with our Ember-App. We will send a JSON when it gets a GET request on <code class="language-markup"><span class="token tag">localhost:8000/api/mailboxes</span></code> (Ember-Data does automatic pluralization on ressources name),  the Express routes handler file is here <code class="language-markup"><span class="token tag">api-stub/routes.js</span></code> and here is what you need to do :</p>
+<p>[prism key="application-nodejs-routes" language="javascript"]</p>
+<p>The JSON that we will send back is just the JSON Fixtures we used with the FixturesAdapter but it needs a little bit of rework to work with Ember-Data.</p>
+<h2>Formatting/normalizing your data</h2>
+<p>Ember-Data expects a particular type of data format, you need to normalize your data and use 'foreign keys' the same way you would with a relational database. Our JSON fixtures looked like that :</p>
+<p>[prism key="application-fixtures-json" language="javascript"]</p>
+<p>In order to be Ember-Data ready, we will have to move our messages into another object called 'messages' and give them an ID to inject them back in our mailboxes, it goes like this :</p>
+<p>[prism key="application-normalizing-messages" language="javascript"]</p>
+<p>The mailbox part will look like that :</p>
+<p>[prism key="application-normalizing-mailbox" language="javascript"]</p>
+<p>As you can see, the mailbox JSON has a 'messages' attribute that is an array filled with numbers. Those numbers are the 'foreign keys' that will enable us to attach referenced messages into each mailbox. If a mailbox has a 'messages' attribute equal to <code class="language-javascript"><span class="token tag">["1", "2"]</span></code> then the messages with IDs "1" and "2" will be attached to this mailbox once the data reaches Ember. We can now merge those two JSON into <code class="language-javascript"><span class="token tag">var data</span></code> and send it over to Ember-Data once an ajax call is made to our Express server on the mailboxes route.</p>
+<h2>Creating the Ember Models</h2>
+<p>We need to define two models, one for each ressource ('message' and 'mailbox') in order to define their structures.</p>
+<h3>Message model</h3>
+<p>The message model will be pretty straightforward, we will just copy/paste the JSON attributes and set them as DS.attr(). We could define a type for each attributes like <code class="language-javascript"><span class="token tag">DS.attr('string')</span></code> or <code class="language-javascript"><span class="token tag">DS.attr('date')</span></code> but for the purpose of this example, it is unecessary.</p>
+<p>[prism key="application-message-model" language="javascript"]</p>
+<p>As you can see, the "id" attribute became "number", this is due to the fact that ember will not let you name a model's attribute ID. Instead you will need to create an idField for the model and set the attributes that should be the ID. In this example, "number" is the "id" of the model.</p>
+<h3>Mailbox model</h3>
+<p>The mailbox model will be slightly trickier since we need to define a 'relationship' with the message model. The 'mailbox' can have one or more 'messages' so the relationship will be <code class="language-javascript"><span class="token tag">hasMany</span></code> 'message'. It looks like that :</p>
+<p>[prism key="application-mailbox-model" language="javascript"]</p>
+<p>This <code class="language-javascript"><span class="token tag">hasMany</span></code> relationship tells Ember-Data that when a mailbox model is loaded, it also needs to fetch the messages for which the ID is inside the messages array and then populate this messages array with the actual messages.</p>
+<h2>The Application route</h2>
+<p>Now that our model is able to fetch data from our Express server, we need to inject this data inside the views. We will use the 'model' hook of the ApplicationRoute to do that :</p>
+<p>[prism key="application-route-model" language="javascript"]</p>
+<p>We ask Ember-Data throught the <code class="language-javascript"><span class="token tag">store</span></code> object to find all the mailbox objects. Under the hood, Ember will make an ajax call to the route <code class="language-markup"><span class="token tag">localhost:8000/api/mailboxes</span></code> and get a JSON from this URL. You do not need to import models into your ApplicationRoute module, Ember will automatically find models in the folder model when you look for them with the store. Once again, conventions make the whole process a breeze.</p>
+<p>The last thing you need to do now is to run <code>grunt server</code> in your terminal, and see if everything is working !</p>
+<p>You can find the code used in this article in <a href="https://github.com/thaume/emberjs-es6-modules/tree/ember-es6-ember-data">this git repo</a> on the branch 'ember-es6-ember-data'.</p>
