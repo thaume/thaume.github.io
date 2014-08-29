@@ -2,13 +2,6 @@
 layout: post
 title: 'ES6 modules and EmberJS : a taste of the future (part 2)'
 date: 2013-12-12 01:29:52.000000000 +01:00
-categories:
-- EmberJS
-- ES6
-tags:
-- emberjs
-- es6
-status: publish
 type: post
 published: true
 meta:
@@ -18,7 +11,6 @@ meta:
   seo_keywords: Ember, Ember js, EmberJS, ES6 modules, Ember modules
   seo_robots_index: '0'
   seo_robots_follow: '0'
-  dsq_thread_id: '2044730150'
 author:
   login: Tom
   email: tom.coquereau@gmail.com
@@ -31,7 +23,7 @@ EmberJS does not have a built-in module system per-se and the community is now p
 
 I've been looking at the Ember App Kit (EAK) for a couple of weeks now, and I'm solving big problems with it ! Both in terms of productivity and scalability. Creating AMD modules with Ember's conventions becomes a breeze to write thanks to the Resolver shipped with EAK. You first need to understand how things work, how files make sense together... but once you'll get that, you'll start to love it.
 
-For instance your route {% highlight javascript %}routes/users.js{% endhighlight %} will know to use the controller in <code class="language-markup"><span class="token tag">controllers/users.js</span></code> and the template in <code class="language-markup"><span class="token tag">templates/users.hbs</span></code>. You might want to manually add a model somewhere, you can use an <code class="language-javascript"><span class="token tag">import</span></code> statement to get the job done !
+For instance your route <code class="language-markup">routes/users.js</code> will know to use the controller in <code class="language-markup">controllers/users.js</code> and the template in <code class="language-markup">templates/users.hbs</code>. You might want to manually add a model somewhere, you can use an <code class="language-javascript">import</code> statement to get the job done !
 
 ## Nuff' talk ! Gimme some code !
 All right, all right, we'll implement the "Mailbox" example from the EmberJS website using ES6 modules, sounds good ? Keep reading ;) Clone the git [repo](https://github.com/thaume/emberjs-es6-modules/tree/ember-es6-1) and follow me !
@@ -88,7 +80,8 @@ We need to define a behavior for the routes we just mapped to our Router, for th
 
 <ol>
 
-<li>The application route callback : {% highlight javascript %}
+<li>The application route callback : 
+{% highlight javascript %}
   import Mailbox from 'appkit/models/mailbox';
 
 var ApplicationRoute = Em.Route.extend({
@@ -100,7 +93,8 @@ var ApplicationRoute = Em.Route.extend({
 export default ApplicationRoute;
 {% endhighlight %}</li>
 
-<li>The mail route callback :  {% highlight javascript %}
+<li>The mail route callback :
+{% highlight javascript %}
 var MailRoute = Em.Route.extend({
   model: function(params) {
     return this.modelFor('mailbox').messages.findBy('id', params.message_id);
@@ -112,7 +106,7 @@ export default MailRoute;
 
 </ol>
 
-We need to import the model 'mailbox' to be able to query all the messages in the application route, but we can use the <code class="language-javascript"><span class="token tag">modelFor('mailbox');</span></code> method in the mail route to use the model of mailbox which was imported as context in the <code class="language-markup"><span class="token tag">{{ "{{#link-to" }}}}</span></code> as you'll see later in the application.hbs, mailbox.hbs templates.
+We need to import the model 'mailbox' to be able to query all the messages in the application route, but we can use the <code class="language-javascript">modelFor('mailbox');</code> method in the mail route to use the model of mailbox which was imported as context in the <code class="language-markup">{{ "{{#link-to" }}}}</code> as you'll see later in the application.hbs, mailbox.hbs templates.
 
 ## The model
 In the application route, we had to import the model Mailbox in order to query all the messages of our mailbox. Here is the model :
@@ -137,10 +131,10 @@ var FIXTURES = [
 ];
 {% endhighlight %}
 
-Here we created an object model that will give the data to the route. We've been able to import this model in the application route thanks to the <code class="language-javascript"><span class="token tag">export default Mailbox</span></code>. I didn't wanted to display the FIXTURES but you'll find them in the repo I gave you at the beginning of the article.
+Here we created an object model that will give the data to the route. We've been able to import this model in the application route thanks to the <code class="language-javascript">export default Mailbox</code>. I didn't wanted to display the FIXTURES but you'll find them in the repo I gave you at the beginning of the article.
 
 ## Templates
-<strong>application.hbs:</strong> The first template that will be rendered is application.hbs, on the root URL <code class="language-markup"><span class="token tag">/</span></code> . Ember will automatically link the template to the route based on names, and application.hbs + index.hbs come as the "default frame" when you kickstart an application :
+<strong>application.hbs:</strong> The first template that will be rendered is application.hbs, on the root URL <code class="language-markup">/</code> . Ember will automatically link the template to the route based on names, and application.hbs + index.hbs come as the "default frame" when you kickstart an application :
 
 {% highlight HTML %}
 <div class="url">URL: {{ "{{target.url" }}}}</div>
@@ -152,7 +146,7 @@ Here we created an object model that will give the data to the route. We've been
                 {{ "{{#link-to "mailbox" this currentWhen="mailbox"" }}}}
                     <span class="count">
                         {{ "{{messages.length" }}}}
-                    </span>
+
                     {{ "{{name" }}}}
                 {{ "{{/link-to" }}}}
             </li>
@@ -170,7 +164,7 @@ Here we created an object model that will give the data to the route. We've been
 {% highlight HTML %}
 <div class="index">
   <h1>TomsterMail</h1>
-  <span class="tomster"></span>
+  <span class="tomster">
 </div>
 {% endhighlight %}
 
@@ -224,9 +218,9 @@ Here we created an object model that will give the data to the route. We've been
 </div>
 {% endhighlight %}
 
-The templates are processed by the grunt task <code class="language-markup"><span class="token tag">grunt-ember-template</span></code>, you should not have to worry about that, just use the classic Ember's conventions names for your templates (just remember to switch to a pathname style convention).
+The templates are processed by the grunt task <code class="language-markup">grunt-ember-template</code>, you should not have to worry about that, just use the classic Ember's conventions names for your templates (just remember to switch to a pathname style convention).
 
-We now have everything we need to kickstart our app, let's write the <code class="language-markup"><span class="token tag">app.js</span></code> and unleash Ember !
+We now have everything we need to kickstart our app, let's write the <code class="language-markup">app.js</code> and unleash Ember !
 
 ## App.js
 Our app.js file is the entry point of our application, where we create the application and launch the Resolver (all the LOG_* are for debug purpose):
@@ -263,7 +257,7 @@ Once all your modules are exported, they will go throught the Resolver and will
 <script>window.App = require('appkit/app')["default"].create();</script>
 {% endhighlight %}
 
-The last thing you need to do now is to run <code class="language-bash"><span class="token tag">grunt server</span></code> in your terminal (from the root of the [git you cloned](https://github.com/thaume/emberjs-es6-modules)), and let the Ember App Kit drive you throught ES6 modules transpiled to AMD inside of your browser, have fun !
+The last thing you need to do now is to run <code class="language-bash">grunt server</code> in your terminal (from the root of the [git you cloned](https://github.com/thaume/emberjs-es6-modules)), and let the Ember App Kit drive you throught ES6 modules transpiled to AMD inside of your browser, have fun !
 
 I want a [DEMO LINK](http://thau.me/demo/emberjs-es6/) !
 
