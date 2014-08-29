@@ -4,12 +4,22 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
-      <title>{{ site.name }} - {{ site.description }}</title>
+      <title>
+        {% if post.meta.seo_title %}
+          {{ post.meta.seo_title }}
+        {% else %}
+          {{ site.name }} - {{ site.description }}
+        {% endif %}
+      </title>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta http-equiv="content-language" content="en-gb" />
-      <meta name="description" content="Fluid, responsive blog theme for Jekyll.">
+
+      <meta name="description" content="{{ post.meta.seo_description }}">
+      <meta name="keywords" content="{{ post.meta.seo_keywords }}">
+
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
       <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
       <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/main.css" />
       <link href="atom.xml" type="application/atom+xml" rel="alternate" title="Site ATOM Feed">
@@ -29,6 +39,10 @@
           <p>{{ site.author-bio }}</p>
       </div>
       <nav>
+        <h6>Also discover</h6>
+        <ul>
+          <li><a href="/projects">My projects</a></li>
+        </ul>
         <h6>Follow me on</h6>
         <ul>
           {% if site.twitter %}
@@ -36,12 +50,6 @@
           {% endif %}
           {% if site.github %}
           <li><a target="_blank" href="http://github.com/{{ site.github }}">Github</a></li>
-          {% endif %}
-          {% if site.dribbble %}
-          <li><a target="_blank" href="{{ site.dribbble }}">Dribbble</a></li>
-          {% endif %}
-          {% if site.instagram %}
-          <li><a target="_blank" href="{{ site.instagram }}">Instagram</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -62,7 +70,7 @@
       </main>
 
       <footer>
-        <small>Powered by Jekyll - Theme: <a href="https://github.com/m3xm/hikari-for-Jekyll">hikari</a> - &copy; {{ site.author }}</small>
+        <small>Powered by Jekyll - &copy; {{ site.author }}</small>
       </footer>
 
     </div>
