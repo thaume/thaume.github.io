@@ -302,6 +302,4 @@ At that point we correctly display the participants of the project. If you go ba
 
 The 'finished' version of the project is [here]() on the branch 'done'.
 
-{% highlight javascript %}
-
-{% endhighlight %}
+Now that you're done with reading async relations, why not learning how to write+sync them with the server [Ember Data - Mastering async relations part 2 (coming soon)]().
