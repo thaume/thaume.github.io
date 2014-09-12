@@ -24,8 +24,8 @@ This post will cover the bootstraping of the application and the first interacti
 
 ## Requirements
 
-To follow this blog post, you need a basic understanding of how Ember.js and Ember Data work, if you want to discover those framework with a simpler project, you can read [this post]().
-You'll also need the ember-cli toolbelt installed, you can find all the instructions [here]().
+To follow this blog post, you need a basic understanding of how Ember.js and Ember Data work, if you want to discover those framework with a simpler project, you can read [this post](http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-2/).
+You'll also need the ember-cli toolbelt installed, you can find all the instructions [here](http://www.ember-cli.com/).
 
 ## Get the bootstraped app
 
@@ -300,4 +300,4 @@ As we saw before, here is what is returned by the server:
 
 At that point we correctly display the participants of the project. If you go back to the description screen (by clicking 'show description' on the project page) you'll get back to the project index page, if you click again on 'show participants', participants will be shown but no call ajax will be made. They are now 'cached'.
 
-Now that you're done with reading async relationships, why not learning how to write+sync them with the server [Ember Data - Mastering async relationships part 2 (coming soon)]().
+Now that you're done with reading async relationships, why not learning how to write+sync them with the server "Ember Data - Mastering async relationships part 2 (coming soon)".
