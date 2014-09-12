@@ -1,4 +1,4 @@
----
+ ---
 layout: post
 title: Ember Data - Mastering async relationships part 1
 date: 2014-09-15 16:16:51.000000000 +01:00
@@ -20,16 +20,16 @@ Although I have achieved quite a bit of work alongside Ember.js, Ember Data is a
 
 I have to confess that Ember Data's (ED) async relationships gave me a hard time. It was worth the pain though, as soon as you understand how those relationships work it will get a lot easier to achieve almost anything (model-related) with a better granularity.
 
-This post will cover the bootstraping of the application and the first interaction (read) with an async relationship. The next post will be about modifying (write) an async relationship and syncing it with the server.
+This post will cover the bootstrapping of the application and the first interaction (read) with an async relationship. The next post will be about modifying (write) an async relationship and syncing it with the server.
 
 ## Requirements
 
 To follow this blog post, you need a basic understanding of how Ember.js and Ember Data work, if you want to discover those framework with a simpler project, you can read [this post](http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-2/).
 You'll also need the ember-cli toolbelt installed, you can find all the instructions [here](http://www.ember-cli.com/).
 
-## Get the bootstraped app
+## Get the bootstrapped app
 
-The bootstraped app is available [here](https://github.com/thaume/ember-data-async-rel). You'll need it to go through the steps of this tutorial (mostly for the server-side code). Once you've downloaded it, process with the classic 'npm install && bower install'. Then 'ember server' to start the whole thing.
+The bootstrapped app is available [here](https://github.com/thaume/ember-data-async-rel). You'll need it to go through the steps of this tutorial (mostly for the server-side code). Once you've downloaded it, process with the classic 'npm install && bower install'. Then 'ember server' to start the whole thing.
 
 ## Context
 
