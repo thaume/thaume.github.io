@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -14,7 +15,18 @@
       <link rel="stylesheet" type="text/css" href="/hikari-for-Jekyll/css/main.css" />
       <link href="atom.xml" type="application/atom+xml" rel="alternate" title="Site ATOM Feed">
   </head>
+||||||| merged common ancestors
+---
+layout: default
+title: Homepage
+---
+=======
+---
+layout: default
+---
+>>>>>>> [theme] Change theme
 
+<<<<<<< HEAD
   <body>
     <!--[if lt IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
@@ -171,7 +183,43 @@
     
   </ul>
 </div>
+||||||| merged common ancestors
+<div id="home">
+  <ul class="posts">
+    {% for post in site.posts %}
+    <li itemscope itemtype="http://schema.org/BlogPosting">
+      <a href="{{ site.baseurl }}{{ post.url }}" itemprop="url">
+        <div class="p-wrap">
+          <time datetime="{{ post.date | date_to_xmlschema }}"
+              itemprop="datePublished">
+            {{ post.date | date_to_string }}
+          </time>
+          <p itemprop="name headline">{{ post.title }}</p>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+=======
+<div class="home">
 
+  <div class="posts">
+    {% for post in paginator.posts %}
+      <div class="post">
+        <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
+          <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
+          <h3 class="h2 post-title">{{ post.title }}</h3>
+          <p class="post-summary">{{ post.meta.seo_description }}</p>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% include pagination.html %}
+>>>>>>> [theme] Change theme
+
+<<<<<<< HEAD
 
 
       </main>
@@ -199,3 +247,26 @@
 
   </body>
 </html>
+||||||| merged common ancestors
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.next_page %}
+  <a href="/page/{{paginator.next_page}}" class="older">Older</a>
+  {% else %}
+  <span class="next">Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+    <a href="/" class="newer">Newer</a>
+    {% else %}
+    <a href="/page/{{paginator.previous_page}}" class="newer">Newer</a>
+    {% endif %}
+  {% else %}
+  <span class="previous">Newer</span>
+  {% endif %}
+</div>
+{% endif %}
+=======
+  <!--<p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>-->
+</div>
+>>>>>>> [theme] Change theme
