@@ -37,9 +37,7 @@ For this blog post, we're going to create a simple project management app that w
 
 - **The dashboard**: Display all projects attached to the 'currentUser' ('index' route)
 - **The project description**: Show one project and its description ('projects/:id' route)
-- **The project participants**: Display 'participants' of this projects ('projects/:id/participants' route)
-
-Very simple indedd :)
+- **The project participants**: Display 'participants' of this project ('projects/:id/participants' route)
 
 ## Models
 
