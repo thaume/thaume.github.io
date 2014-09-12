@@ -29,7 +29,7 @@ You'll also need the ember-cli toolbelt installed, you can find all the instruct
 
 ## Get the bootstraped app
 
-The bootstraped app is available [here](). You'll need it to go through the steps of this tutorial (mostly for the server-side code). Once you've downloaded it, process with the classic 'npm install && bower install'. Then 'ember server' to start the whole thing.
+The bootstraped app is available [here](https://github.com/thaume/ember-data-async-rel). You'll need it to go through the steps of this tutorial (mostly for the server-side code). Once you've downloaded it, process with the classic 'npm install && bower install'. Then 'ember server' to start the whole thing.
 
 ## Context
 
@@ -299,7 +299,5 @@ As we saw before, here is what is returned by the server:
 {% endhighlight %}
 
 At that point we correctly display the participants of the project. If you go back to the description screen (by clicking 'show description' on the project page) you'll get back to the project index page, if you click again on 'show participants', participants will be shown but no call ajax will be made. They are now 'cached'.
-
-The 'finished' version of the project is [here]() on the branch 'done'.
 
 Now that you're done with reading async relationships, why not learning how to write+sync them with the server [Ember Data - Mastering async relationships part 2 (coming soon)]().
