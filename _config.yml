@@ -1,38 +1,17 @@
-# Title of your blog; shows in the header
+# Site settings
+title: "Tom Coquereau"
 name: "Tom Coquereau"
-
-# Description of your content (will only be used on Google Search)
 description: "front-end developer · Paris"
-
-# Your name. Will show in your footer + sidebar
+email: tom@thau.me
 author: "Tom Coquereau"
-
-url: "http://thaume.github.io"
-
-# A short presentation of yourself. Will show in the sidebar, under your name. Best usage would be between 30 to 50 words.
-author-bio: "I work as a front-end architect at viadeo in Paris. My job was to create a new NodeJS stack for our middle-end, now that it is done I spend my time helping developers get the best from this new platform. This is my personal blog. I write here, mostly about front-end stuffs, to engage with the developer community."
-
-# Social Accounts (mine, as placeholders)
+baseurl: ""
+url: "http://thau.me"
+google_analytics: UA-45409833-1
 
 twitter: thaume
 github: thaume
 
-# Google Analytics (you may want to changes these with yours or even delete :)
-
-ga_domain: thaume.github.io
-ga_tracking_id: UA-47727049-1232323232
-
-# Other (refer to http://jekyllrb.com/docs/home/ for further details on the below)
-
+# Build settings
 markdown: kramdown
-permalink: pretty
-highlighter: pygments
-
-paginate: 10
-paginate_path: "/page/:num"
-
-# SCSS
-
-sass:
-  sass_dir: _scss
-  style: :compressed
+permalink: /:year/:month/:title
+paginate: 3

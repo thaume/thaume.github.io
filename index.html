@@ -1,41 +1,22 @@
 ---
 layout: default
-title: Homepage
 ---
 
-<div id="home">
-  <ul class="posts">
-    {% for post in site.posts %}
-    <li itemscope itemtype="http://schema.org/BlogPosting">
-      <a href="{{ site.baseurl }}{{ post.url }}" itemprop="url">
-        <div class="p-wrap">
-          <time datetime="{{ post.date | date_to_xmlschema }}"
-              itemprop="datePublished">
-            {{ post.date | date_to_string }}
-          </time>
-          <p itemprop="name headline">{{ post.title }}</p>
-        </div>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+<div class="home">
 
-{% if paginator.total_pages > 1 %}
-<div class="pagination">
-  {% if paginator.next_page %}
-  <a href="/page/{{paginator.next_page}}" class="older">Older</a>
-  {% else %}
-  <span class="next">Older</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-    <a href="/" class="newer">Newer</a>
-    {% else %}
-    <a href="/page/{{paginator.previous_page}}" class="newer">Newer</a>
-    {% endif %}
-  {% else %}
-  <span class="previous">Newer</span>
-  {% endif %}
+  <div class="posts">
+    {% for post in paginator.posts %}
+      <div class="post">
+        <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
+          <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
+          <h3 class="h2 post-title">{{ post.title }}</h3>
+          <p class="post-summary">{{ post.meta.seo_description }}</p>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% include pagination.html %}
+
+  <!--<p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>-->
 </div>
-{% endif %}
