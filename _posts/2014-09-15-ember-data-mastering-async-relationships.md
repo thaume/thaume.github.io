@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Ember Data - Mastering async relations part 1
+title: Ember Data - Mastering async relationships part 1
 date: 2014-09-15 16:16:51.000000000 +01:00
 type: post
 published: true
 meta:
-  seo_title: Ember Data mastering async relations
-  seo_description: A walkthrough Ember Data async relations, fetching, saving and displaying everything on the templates with the help of Ember-CLI.
-  seo_keywords: emberjs, ember-data, ember-cli, async, relations
+  seo_title: Ember Data mastering async relationships
+  seo_description: A walkthrough Ember Data async relationships, fetching, saving and displaying everything on the templates with the help of Ember-CLI.
+  seo_keywords: emberjs, ember-data, ember-cli, async, relationships
   seo_robots_index: '0'
   seo_robots_follow: '0'
 author:
@@ -18,9 +18,9 @@ author:
 
 Although I have achieved quite a bit of work alongside Ember.js, Ember Data is a whole new world; a world of wonders for sure, but still another big step toward full mastering of the Ember framework.
 
-I have to confess that Ember Data's (ED) async relations gave me a hard time. It was worth the pain though, as soon as you understand how those relations work it will get a lot easier to achieve almost anything (model-related) with a better granularity.
+I have to confess that Ember Data's (ED) async relationships gave me a hard time. It was worth the pain though, as soon as you understand how those relationships work it will get a lot easier to achieve almost anything (model-related) with a better granularity.
 
-This post will cover the bootstraping of the application and the first interaction (read) with an async relation. The next post will be about modifying (write) an async relation and syncing it with the server.
+This post will cover the bootstraping of the application and the first interaction (read) with an async relationship. The next post will be about modifying (write) an async relationship and syncing it with the server.
 
 ## Requirements
 
@@ -50,7 +50,7 @@ We'll need 2 models to create this product:
 
 ### User model
 
-We'll first generate the User model as we'll need it as a realtion in our Project model. To achieve that you need to enter this command in your terminal (the 'g' stands for 'generate'):
+We'll first generate the User model as we'll need it as a relationship in our Project model. To achieve that you need to enter this command in your terminal (the 'g' stands for 'generate'):
 
 {% highlight bash %}
 $ ember g model User name:string
@@ -74,7 +74,7 @@ The same way we created our User model, let's generate the Project model:
 $ ember g model Project title:string description:string
 {% endhighlight %}
 
-Now we need to add our async hasMany relation with the user through a 'participants' property. This goes as follows:
+Now we need to add our async hasMany relationship with the user through a 'participants' property. This goes as follows:
 
 {% highlight javascript %}
 import DS from 'ember-data';
@@ -86,15 +86,15 @@ export default DS.Model.extend({
 });
 {% endhighlight %}
 
-### Why are we going async on the 'participants' relation?
+### Why are we going async on the 'participants' relationship?
 
-Using an async relation inside a model lets the Ember app only fetch the data it needs depending on which route it is on. As we'll see in this post, the 'participants' array is not needed until we actually reach the 'project.participants' route.
+Using an async relationship inside a model lets the Ember app only fetch the data it needs depending on which route it is on. As we'll see in this post, the 'participants' array is not needed until we actually reach the 'project.participants' route.
 
-The nice thing is that we can still define all the relations belonging to a model and then fetch each relation once it is needed.
+The nice thing is that we can still define all the relationships belonging to a model and then fetch each relationship once it is needed.
 
 ### What exactly is 'participants' on the Project model?
 
-The async relation behave the same as a computed property. As long as you do not use it, it remains 'not calculated' and as soon as you use it (on a template or inside a function) it gets 'calculated' and you gain access to its value.
+The async relationship behave the same as a computed property. As long as you do not use it, it remains 'not calculated' and as soon as you use it (on a template or inside a function) it gets 'calculated' and you gain access to its value.
 
 ## The dashboard screen
 
@@ -124,7 +124,7 @@ This will issue an ajax request to 'GET /api/projects' serialize the incoming pa
 
 ### Incoming payload
 
-In Ember Data, you need to sideload your data in order for your model to serialize it the right way. This is what comes from the server when you have a non-async hasMany relation:
+In Ember Data, you need to sideload your data in order for your model to serialize it the right way. This is what comes from the server when you have a non-async hasMany relationship:
 
 {% highlight javascript %}
 {
@@ -280,7 +280,7 @@ The template is quite simple, we are just calling the 'participants' property fr
 
 Once the template reaches the property 'model.participants' it will ask the store to 'GET /api/users?ids[]=2&ids[]=3&ids[]=4' (IDs sent by the server inside the 'Project' model previously).
 
-And this is the crucial point: the async relation 'participants' is triggered, the ajax call made and the actual participants fetched and returned all the way to the template.
+And this is the crucial point: the async relationship 'participants' is triggered, the ajax call made and the actual participants fetched and returned all the way to the template.
 
 ### Incoming payload
 
@@ -302,4 +302,4 @@ At that point we correctly display the participants of the project. If you go ba
 
 The 'finished' version of the project is [here]() on the branch 'done'.
 
-Now that you're done with reading async relations, why not learning how to write+sync them with the server [Ember Data - Mastering async relations part 2 (coming soon)]().
+Now that you're done with reading async relationships, why not learning how to write+sync them with the server [Ember Data - Mastering async relationships part 2 (coming soon)]().
