@@ -17,6 +17,9 @@ author:
   display_name: Tom Coquereau
 ---
 
+> **Update 28/06/2014**
+> Ember App Kit is now deprecated in favor of [Ember-CLI](http://www.ember-cli.com/)
+
 EmberJS does not have a built-in module system per-se and the community is now pushing toward ES6 modules as the standard for creating applications with EmberJS.
 
 ![ember-structure-sm](/assets/img/ember-structure-sm.png)
