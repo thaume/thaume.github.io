@@ -18,6 +18,9 @@ author:
   display_name: Tom Coquereau
 ---
 
+> **Update 28/06/2014**
+> Ember App Kit is now deprecated in favor of [Ember-CLI](http://www.ember-cli.com/)
+
 In this blog post about EmberJS and Ember-Data, we'll use the example from the [last blog post series](http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-1/) (you can find it [in this git repo](https://github.com/thaume/emberjs-es6-modules) on the branch master) and we'll plug in the RESTAdapter in order to get data from an Express server instead of using fixtures. Clone the git repo, and follow me !
 
 ![tomster-under-construction](/assets/img/tomster-under-construction.png)
