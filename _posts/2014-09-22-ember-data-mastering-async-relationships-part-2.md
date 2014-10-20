@@ -16,4 +16,30 @@ author:
   display_name: Tom Coquereau
 ---
 
-Let's goooo!
+This post will cover the behaviour of async relationships while communicating with a CRUD back-ends.
+
+## Requirements
+
+To follow this blog post, you need a basic understanding of how Ember.js and Ember Data work, if you want to discover those framework with a simpler project, you can read [this post](http://thau.me/2013/12/es6-modules-and-emberjs-a-taste-of-the-future-part-2/).
+You'll also need the ember-cli toolbelt installed, you can find all the instructions [here](http://www.ember-cli.com/).
+
+## Get the bootstrapped app
+
+The bootstrapped app is available [here](https://github.com/thaume/ember-data-async-rel). You'll need it to go through the steps of this tutorial (mostly for the server-side code). Once you've downloaded it, switch to the 'async-crud' branch and proceed with the classic 'npm install && bower install'. Then 'ember server' to start the whole thing.
+
+## Context
+
+For this blog post, we're going to create the 'write' part of our project management application:
+
+- **The project creation** screen: Create a new project and attach it to the 'currentUser' ('new' route)
+
+## Models
+
+We already created the 2 required models in the previous blog post:
+
+- The **User** model
+- The **Project** model
+
+## The project creation screen
+
+### The 'projects.new' route
