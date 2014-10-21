@@ -46,8 +46,8 @@ permalink: /2014-21-10-emberjs-paris/
   <section>
     <h2>The Ember router</h2>
     <p>Definition of routes and resources</p>
-    <p>Route transition (eg: <code>/posts/edit</code> -> <code>/posts/show/1</code>)</p>
-    <p>Model transition (eg: <code>/posts/show/1</code> -> <code>/posts/show/2</code>)</p>
+    <p>Route transition (eg: <code>/posts/edit</code> -> <code>/posts/1/show</code>)</p>
+    <p>Model transition (eg: <code>/posts/1/show</code> -> <code>/posts/2/show</code>)</p>
   </section>
 </section>
 
@@ -60,6 +60,7 @@ permalink: /2014-21-10-emberjs-paris/
     <h2>jQuery animations</h2>
     <ul>
       <li>Jquery animations are 'hard-coded' for certain DOM elements</li>
+      <li>Hard to reuse</li>
       <li>Hard to refactor</li>
     </ul>
   </section>
@@ -93,7 +94,7 @@ permalink: /2014-21-10-emberjs-paris/
 <h2>About template</h2>
 
 <div class="main">
-    {{ "{{#link-to-animated 'posts.show' post animations='main:slideLeft'" }}}}
+    {{ "{{#link-to-animated 'posts.show' post animations='main:slideLeft'" }}}}Introduction{{ "{{/link-to-animated" }}}}
 </div>
 </code></pre>
   </section>
@@ -117,7 +118,7 @@ App.ApplicationRoute = Ember.Route.extend({
       <li>Good starting point for animations in Ember.js</li>
       <li>CSS animations => limited control</li>
       <li>Need to manually create an empty view for each animation</li>
-      <li>Impossible to define transitions between models</li>
+      <li>Impossible to define transitions between models (eg: /posts/1/show -> /posts/2/show)</li>
     </ul>
   </section>
 
