@@ -1,7 +1,12 @@
 ---
 layout: talks
-title: Talk Ember.js Paris
-permalink: /2014-21-10-emberjs-paris/
+title: Talk / Animating ember.js
+date: 2014-10-21 16:16:51.000000000 +01:00
+type: post
+talk: true
+published: true
+meta:
+  seo_description: A closer look at the state of animation in the Ember.js community
 ---
 
 <section>
@@ -260,3 +265,4 @@ export default function fade(oldView, insertNewView, opts) {
 <section>
   <h1>Questions ?</h1>
 </section>
+
