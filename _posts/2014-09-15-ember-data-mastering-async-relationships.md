@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ember Data - Mastering async relationships part 1
-date: 2014-09-15 16:16:51.000000000 +01:00
+date: 2014-09-15
 type: post
 published: true
 meta:

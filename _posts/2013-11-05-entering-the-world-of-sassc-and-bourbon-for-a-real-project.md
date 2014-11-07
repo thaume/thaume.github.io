@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Entering the world of SASSC and bourbon for a real project
-date: 2013-11-05 19:36:18.000000000 +01:00
+date: 2013-11-05
 type: post
 published: true
 meta:

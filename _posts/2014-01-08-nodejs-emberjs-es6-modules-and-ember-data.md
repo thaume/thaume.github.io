@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NodeJS, EmberJS, ES6 modules and Ember-Data
-date: 2014-01-08 14:12:53.000000000 +01:00
+date: 2014-01-08
 type: post
 published: true
 meta:

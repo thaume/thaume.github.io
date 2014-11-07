@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NodeJS streaming files to Amazon S3
-date: 2014-02-12 16:16:51.000000000 +01:00
+date: 2014-02-12
 type: post
 published: true
 meta:

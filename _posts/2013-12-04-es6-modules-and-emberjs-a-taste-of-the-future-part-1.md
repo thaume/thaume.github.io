@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'ES6 modules and EmberJS : a taste of the future (part 1)'
-date: 2013-12-04 00:19:54.000000000 +01:00
+date: 2013-12-04
 type: post
 published: true
 meta:
