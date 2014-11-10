@@ -4,10 +4,11 @@ title: Ember Data - Mastering async relationships part 2
 date: 2014-11-07
 type: post
 published: true
+tweetId:
 meta:
   seo_title: Ember Data mastering async relationships - part 2
-  seo_description: A walkthrough Ember Data async relationships, fetching, saving and displaying everything on the templates with the help of Ember-CLI.
-  seo_keywords: emberjs, ember-data, ember-cli, async, relationships
+  seo_description: A walkthrough Ember Data async relationships, creating and displaying a new project with the help of Ember-CLI.
+  seo_keywords: emberjs, ember-data, ember-cli, async, relationships, create, new, write, writing, adding, pushObjects
   seo_robots_index: '0'
   seo_robots_follow: '0'
 author:
@@ -48,8 +49,6 @@ We already created the 2 required models in the [previous blog post](/2014/09/em
 For our users to be able to create new projects, we'll need to offer them a `<form>` where they can actually enter a `title`, a `description` and add some participants (which are users).
 
 The classic strategy is to create a `projects.new` route with its corresponding template (`templates/projects/new.hbs`) and controller (`controllers/projects/new.js`).
-
-A proper separation of concern is paramount here as we'll see in a couple of minutes (well... if your app is supposed to be Ember idiomatic).
 
 ### The 'projects.new' route
 
@@ -99,7 +98,7 @@ What's happening here? We need to push two objects (users and newProject) to the
 
 ### The 'projects.new' template
 
-Now that we have all the data needed, let's build our `<form>`! Here is the code:
+Now that we have all the data needed, let's build our `<form>`! Here is the code from `templates/posts/new.hbs`:
 
 {% highlight html %}
 <form role="form" {{ "{{action 'create' on='submit'" }}}}>
@@ -178,7 +177,9 @@ At that point, `selectedUsers` is an array of users that have a property `checke
 
 #### 2 - Complete and save the record
 
-In order to complete our record, we need to inject our `selectedUsers` into the `newProjects.participants` relationship. This relationship being asynchronous, we need to first "open" it. An asynchronous relationship is a `PromiseArray`, wich means that `newProject.participants` is a thenable.
+In order to complete our record, we need to inject our `selectedUsers` into the `newProjects.participants` relationship. This relationship being asynchronous, we need to first "open" it. An asynchronous hasMany relationship is a `PromiseArray`, wich means that `newProject.participants` is a thenable.
+
+If you try to push objects into an async relationship without first "opening" it, it will warn you that the property is read-only.
 
 Opening an async relationship looks like this:
 
@@ -194,7 +195,6 @@ return this.get('newProject.participants').then(function (participants) {
 Then, we need to push our `selectedUsers` array into `newProject.participants`. We'll do it like that:
 
 {% highlight javascript %}
-// Opening the PromiseArray 'participant' from the newly created project
 return this.get('newProject.participants').then(function (participants) {
   // Participants is an array where we can push objects
   participants.pushObjects(selectedUsers);
@@ -241,5 +241,9 @@ actions: {
 {% endhighlight %}
 
 Btw I don't think you need to wait for the server's response, but that might be the content of another UX-centred blog post.
+
+## Wrapping up
+
+You can now enjoy your newly created project and check if the participants you selected are present! Once you reload your page, the project will of course disapear.
 
 Respond to this tweet to talk about this post.
