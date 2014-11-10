@@ -1,10 +1,18 @@
-<footer class="footer">
+{% if page.tweetId %}
+<p class="center">
+  <a title="Reply on Twitter" href="https://twitter.com/intent/tweet?in_reply_to={{page.tweetId}}">
+    <span>Reply on Twitter</span>
+  </a>
+</p>
+{% endif %}
+
+<footer class="footer mt2">
   <div class="p2 wrap">
     <div class="measure mt1 center">
       <a href="https://twitter.com/thaume" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @thaume</a>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       <nav class="mt2">
-        {% include navigation-footer.html %}
+        {% include navigation.html %}
       </nav>
     </div>
   </div>
@@ -22,3 +30,12 @@ ga('send', 'pageview');
 
 </script>
 {% endif %}
+
+<script>window.twttr = (function (d, s, id) {
+  var t, js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src= "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+  return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+}(document, "script", "twitter-wjs"));</script>
