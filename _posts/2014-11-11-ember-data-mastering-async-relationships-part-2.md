@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ember Data - Mastering async relationships part 2
-date: 2014-11-07
+date: 2014-11-11
 type: post
 published: true
 tweetId:
