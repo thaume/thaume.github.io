@@ -129,9 +129,11 @@ Now that we have all the data needed, let's build our `<form>`! Here is the code
 </form>
 {% endhighlight %}
 
-We now need to bind our newProject records properties in its corresponding input's value attribute (title, description). Then, in order to be able to check the users we want as `participants`, we can use 2-way data-binding and push a new property `check` on each user. This is a bit lame (to do it right you might want to use components instead) but it is much simpler for this demo.
+We now need to bind our newProject records properties in its corresponding input's value attribute (title, description).
 
-Now that our template is ready to receive data, let's create an `action` to notify our controller that the user is submitting the form. This is what is happening in the `<form>` tag. The `{{ "{{action 'create' on='submit'" }}}}` will call the `create` action method on our controller when the form fire the `submit` event. Let's see how that looks on our controller.
+Then, in order to be able to select the users we want as `participants`, we can use 2-way data-binding and push a new property `check` on each user. This is a bit lame (to do it right you might want to use components instead) but it is much simpler for this demo.
+
+Now that our template is ready to receive data, let's create an `action` to notify our controller that the user is submitting the form. This is what is happening in the `<form>` tag. The `{{ "{{action 'create' on='submit'" }}}}` will call the `create` action method on our controller (`controllers/projects/new.js`) when the form triggers the `submit` event. Let's see how that looks on our controller.
 
 ### The 'projects.new' controller
 
@@ -178,23 +180,15 @@ At that point, `selectedUsers` is an array of users that have a property `checke
 
 In order to complete our record, we need to inject our `selectedUsers` into the `newProjects.participants` relationship. This relationship being asynchronous, we need to first "open" it. An asynchronous relationship is a `PromiseArray`, wich means that `newProject.participants` is a thenable.
 
-Opening and pushing records into an async relationship looks like this:
+Opening an async relationship looks like this:
 
 {% highlight javascript %}
-actions: {
-  create: function () {
-    // Creation of the array of selected users
-    var selectedUsers = this.get('users').filter(function (user) {
-      return !!user.get('checked');
-    });
-
-    // Opening the PromiseArray 'participant' from the newly created project
-    return this.get('newProject.participants').then(function (participants) {
-      ...
-
-    }.bind(this))
-  }
-}
+// Opening the PromiseArray 'participant' from the newly created project
+return this.get('newProject.participants').then(function (participants) {
+  // We now have access to the newProject.participants property
+  // and it is not read-only here
+  ...
+});
 {% endhighlight %}
 
 Then, we need to push our `selectedUsers` array into `newProject.participants`. We'll do it like that:
@@ -205,7 +199,7 @@ return this.get('newProject.participants').then(function (participants) {
   // Participants is an array where we can push objects
   participants.pushObjects(selectedUsers);
 
-}.bind(this))
+})
 {% endhighlight %}
 
 Finally, we can save our record which now has the `selectedUsers` array set to its `participants` relationship (btw don't trust me, check in your ember inspector).
@@ -247,3 +241,5 @@ actions: {
 {% endhighlight %}
 
 Btw I don't think you need to wait for the server's response, but that might be the content of another UX-centred blog post.
+
+Respond to this tweet to talk about this post.
