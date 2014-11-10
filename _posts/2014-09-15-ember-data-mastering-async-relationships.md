@@ -4,6 +4,7 @@ title: Ember Data - Mastering async relationships part 1
 date: 2014-09-15 16:16:51.000000000 +01:00
 type: post
 published: true
+tweetId: 510350566619611136
 meta:
   seo_title: Ember Data mastering async relationships
   seo_description: A walkthrough Ember Data async relationships, fetching, saving and displaying everything on the templates with the help of Ember-CLI.
