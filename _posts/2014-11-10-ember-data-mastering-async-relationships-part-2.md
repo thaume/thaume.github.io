@@ -245,5 +245,3 @@ Btw I don't think you need to wait for the server's response, but that might be 
 ## Wrapping up
 
 You can now enjoy your newly created project and check if the participants you selected are present! Once you reload your page, the project will of course disapear.
-
-Respond to this tweet to talk about this post.
