@@ -299,4 +299,4 @@ As we saw before, here is what is returned by the server:
 
 At that point we correctly display the participants of the project. If you go back to the description screen (by clicking 'show description' on the project page) you'll get back to the project index page, if you click again on 'show participants', participants will be shown but no call ajax will be made. They are now 'cached'.
 
-Now that you're done with reading async relationships, why not learning how to write+sync them with the server "Ember Data - Mastering async relationships part 2 (coming soon)".
+Now that you're done with reading async relationships, why not learning how to write+sync them with the server "[Ember Data - Mastering async relationships part 2](/2014/11/ember-data-mastering-async-relationships-part-2/)".
