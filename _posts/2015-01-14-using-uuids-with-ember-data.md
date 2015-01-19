@@ -4,7 +4,7 @@ title: Using UUIDs with Ember Data
 date: 2015-01-14
 type: post
 published: true
-tweetId:
+tweetId: 557132295866679296
 meta:
   seo_title: Using UUIDs with Ember Data
   seo_description: Why using UUIDs with Ember Data can lead to powerful UX improvements. A write up about the ember-cli-uuid addon and its application in a real life application.
