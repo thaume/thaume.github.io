@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Using UUID with Ember Data
+title: Using UUIDs with Ember Data
 date: 2015-01-14
 type: post
 published: true
 tweetId:
 meta:
-  seo_title: Using UUID with Ember Data
-  seo_description: Why using UUID with Ember Data can lead to powerful UX improvements. A write up about the ember-cli-uuid addon and its application in a real life application.
+  seo_title: Using UUIDs with Ember Data
+  seo_description: Why using UUIDs with Ember Data can lead to powerful UX improvements. A write up about the ember-cli-uuid addon and its application in a real life application.
   seo_keywords: emberjs, ember-data, ember-cli, async, uuid, id, uuids, ids, example, ux
   seo_robots_index: '0'
   seo_robots_follow: '0'
