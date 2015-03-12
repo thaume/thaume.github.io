@@ -17,6 +17,7 @@ author:
   display_name: Tom Coquereau
 ---
 
+
 In my lastest post 'Ember Data - Mastering async relationships part 2' we created a project and saved it on the server this way:
 
 {% highlight javascript %}
