@@ -61,7 +61,7 @@ Alright, it works. But it's not standard and it feels 'hacky'.
 
 After a couple of days of euphoric development I realised that I had to support IE9. No big deal, except for CORS (CORS can sorta' work on IE8/9 but you need to load an external library).
 
-I realised that it would be far easier to proxy all my requests through an Nginx proxy no matter what is the browser making the requests. Fortunately, the Heroku buildpack comes with an Nginx for free ! You just need to set a couple of environment variables and it Just Works. Alright, all the ajax requests to `http://myappdomain.com/api` are proxied to the API.
+I realised that it would be far easier to proxy all my requests through an Nginx proxy no matter what is the browser making the requests. Fortunately, the Heroku buildpack comes with an Nginx for free ! You just need to set a couple of environment variables and it Just Works. Alright, all the ajax requests to `http://myappdomain.com/api` are proxied to the API (on `http://api.myappdomain.com`).
 
 Since both the iojs API and the Ember app are hosted at Heroku Europe, they can communicate really fast together through this awesome protocol called HTTP(S). The response time is really great and the measured request timing is almost similar in Nginx's and API's logs.
 
