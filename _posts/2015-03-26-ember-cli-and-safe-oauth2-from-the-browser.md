@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ember-CLI and safe OAuth2 from the browser
+title: Heroku, Ember-CLI and safe OAuth2 from the browser
 date: 2015-03-26
 type: post
 published: true
