@@ -4,7 +4,7 @@ title: Ember-CLI and safe OAuth2 from the browser
 date: 2015-03-26
 type: post
 published: true
-tweetId:
+tweetId: 581381986809352192
 meta:
   seo_title: Heroku, Ember-CLI and safe OAuth2 from the browser
   seo_description: How to effectively and securely use the OAuth2 standard to authorize API authentication calls from the browser with Ember-CLI and ember-simple-auth.
