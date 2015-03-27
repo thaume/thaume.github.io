@@ -27,7 +27,7 @@ To make it simple: when you want to use OAuth2, you need to send the `client_id`
 
 The problem is that we are in the browser and you don't want to use a `client_secret` from the browser, waiting to be found.
 
-My first atempt at solving this problem was to add a `client_id` header to my authentication call (`/authentication/token`) :
+My first attempt at solving this problem was to add a `client_id` header to my authentication call (`/authentication/token`) :
 
 {% highlight javascript %}
 // app/initializers/authentication.js
