@@ -202,7 +202,7 @@ class Player extends User {
 
   <section>
 
-    <h2>ES7 / Decorators</h2>
+    <h2>Decorators</h2>
 
 <pre><code data-trim contenteditable>
 class User {
@@ -241,7 +241,7 @@ class MyClass { ... }
 
   <section>
 
-    <h2>ES7 / Async functions</h2>
+    <h2>Async functions</h2>
 
 <pre><code data-trim contenteditable>
 async function() {
