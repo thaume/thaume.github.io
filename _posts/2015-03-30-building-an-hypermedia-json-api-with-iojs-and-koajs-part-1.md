@@ -47,7 +47,6 @@ To do so, here is the proposed data structure:
     "title": "Rails is omakaze",
     "links": {
       "author": {
-        "self": "http://mydomain.com/articles?links=true&postId=10",
         "related": "http://mydomain.com/people?postId=10",
         "linkage": {
           "id": "9"
@@ -55,11 +54,7 @@ To do so, here is the proposed data structure:
         }
       },
       "comments": {
-        "related": "http://mydomain.com/comments?postId=10",
-        "linkage": {
-          "id": "10"
-          "type": "comments"
-        }
+        "related": "http://mydomain.com/comments?postId=10"
       }
     }
   }, {
@@ -86,11 +81,11 @@ To do so, here is the proposed data structure:
 If your client-side application is compatible with this API standard, you will not even have to fetch the author of the post since it is bundled in the data returned by the API. But you still have the URL if you want to reload (re-fetch, refresh) the author of the post. Next time you need a record with `{ type: 'people' }` and `{ id: 9 }` it will be loaded from the client-side application cache, no need to ask the API.
 
 #### Getting the related comments
-On the other hand, the comments are not loaded so you need to use the `related` link to fetch the comments of this post. The API that sent this JSON could have chosen to include the `comments` relationship of the `posts` but decided that it was better to load it asynchronously once the post is displayed (or maybe the user needs to click on some button to actually load the comment).
+On the other hand, the comments are not loaded so you need to use the `related` link to fetch the comments of this post. The API that sent this JSON could have chosen to include the `comments` relationship of the `posts` but decided that it was better to load it asynchronously once the post is displayed (or maybe the user needs to click on some button to actually load the comments).
 
 Those are the basics of the JSON API. This little JSON provides two things: an easy way to cache records and an easy way to 'discover' related records. Awesome !
 
-If you want to learn more you should visit [the JSON API website](http://jsonapi.org) (MIME type, extended data structure...).
+If you want to learn more you should visit [the JSON API website](http://jsonapi.org) (MIME type, complete data structure...).
 
 ### Architecturing our API
 
@@ -123,7 +118,7 @@ Models are the solid center of your API; this is where records creation, edition
 
 While in a past job I had, we had no way to replicate the database localy and it was a huge pain to push 'working' data inside it. I really suffered from that and once I found myself in the situation of building an API from scratch, my first concern was to use a solid database schema management and seed.
 
-We'll see how the query builder Knex.js can help us manage database schemas and create seeds that can be really useful for testing and poping new environments.
+We'll see how the query builder [Knex.js](http://knexjs.org/) can help us manage database schemas and create seeds that can be really useful for testing and poping new environments.
 
 #### Services
 
