@@ -153,7 +153,6 @@ var lastUserAge = usersAges[usersAges.length - 1];
 
 // ES6 way of getting an array's elements
 const [userOneAge, , ,userFourAge] = usersAges;
-const [...lastUserAge] = usersAges;
 </code></pre>
 
   </section>
