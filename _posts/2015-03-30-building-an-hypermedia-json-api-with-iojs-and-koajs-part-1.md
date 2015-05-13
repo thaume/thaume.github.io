@@ -17,7 +17,7 @@ author:
   display_name: Tom Coquereau
 ---
 
-As a guy who've worked for some time with node 0.11 and koa, it is now really refreshing to have generators and a couple other ES2015/ES6 features working right out of the box. I will focus this blog posts series around [io.js](http://iojs.org) and [koa.js](http://koa.org) and global API design paterns.
+As a guy who've worked for some time with node 0.11 and koa, it is now really refreshing to have generators and a couple other ES2015/ES6 features working right out of the box. I will focus this blog posts series around [io.js](http://iojs.org) and [koa.js](http://koajs.com/) and global API design paterns.
 
 We will be looking at quite a lot of what a modern API is supposed to be able to do (from OAuth2 to ACL and ORM). Although I will try my best to describe them, do not hesitate to contact me on [twitter](http://twitter.com/thaume) if you need more explanation.
 
