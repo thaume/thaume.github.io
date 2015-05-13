@@ -4,7 +4,7 @@ title: Building an Hypermedia JSON API with io.js and koa.js (part 1)
 date: 2015-03-30
 type: post
 published: true
-tweetId:
+tweetId: 598414198478090240
 meta:
   seo_title: Building an Hypermedia JSON API with io.js and koa.js (part 1)
   seo_description: How to build a full API with io.js and koa.js
