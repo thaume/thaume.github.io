@@ -149,7 +149,6 @@ var usersAges = [24, 32, 54, 16, 42];
 // ES5 way of getting an array's elements
 var userOneAge = usersAges[0];
 var userFourAge = usersAges[3];
-var lastUserAge = usersAges[usersAges.length - 1];
 
 // ES6 way of getting an array's elements
 const [userOneAge, , ,userFourAge] = usersAges;
