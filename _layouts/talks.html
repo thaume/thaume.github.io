@@ -11,11 +11,15 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="/reveal/css/reveal.min.css">
-    <link rel="stylesheet" href="/reveal/css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="/reveal/css/reveal.css">
 
-    <!-- For syntax highlighting -->
+    <!-- Code highlight + theme -->
     <link rel="stylesheet" href="/reveal/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/reveal/css/theme/black.css" id="theme">
+
+    <!-- <link rel="stylesheet" href="/reveal/css/theme/white.css" id="theme">
+    <link rel="stylesheet" href="/reveal/lib/css/light.css"> -->
+
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -45,6 +49,7 @@
       .reveal table td {
         font-size: 28px;
       }
+      .tolowercase {text-transform: lowercase !important;}
     </style>
 
     <!--[if lt IE 9]>
@@ -64,35 +69,32 @@
     </div>
 
   <script src="/reveal/lib/js/head.min.js"></script>
-  <script src="/reveal/js/reveal.min.js"></script>
+  <script src="/reveal/js/reveal.js"></script>
 
   <script>
-    // Full list of configuration options available here:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-      controls: true,
-      progress: true,
-      history: true,
-      center: true,
 
-      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-      transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
 
-      // Parallax scrolling
-      // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
-      // parallaxBackgroundSize: '1200px 800px',
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-      // Optional libraries used to extend on reveal.js
-      dependencies: [
-        { src: '/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-        { src: '/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: '/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: '/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        { src: '/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-        { src: '/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-      ]
-    });
-  </script>
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/reveal/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '/reveal/plugin/zoom-js/zoom.js', async: true },
+          { src: '/reveal/plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
 
 </body>
 </html>
