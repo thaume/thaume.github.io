@@ -15,3 +15,5 @@ github: thaume
 markdown: kramdown
 permalink: /:year/:month/:title
 paginate: 3
+
+gems: [jekyll-paginate]
