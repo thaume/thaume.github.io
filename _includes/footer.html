@@ -46,3 +46,27 @@ ga('send', 'pageview');
   analytics.page()
   }}();
 </script>
+
+<script type="text/javascript">
+  if (analytics) {
+    // Form monitoring
+    var mcForm = document.querySelector('#mc-embedded-subscribe-form');
+
+    function callback() {
+      var user = analytics.user();
+      var email = document.querySelector('#mce-EMAIL');
+
+      analytics.identify(user.anonymousId(), {
+        email: email.value
+      });
+      analytics.track("registered_newsletter");
+    };
+
+    if (mcForm.addEventListener) {
+      mcForm.addEventListener("submit", callback, false);
+    } else if (mcForm.attachEvent) {
+      // Fallback for old browsers
+      mcForm.attachEvent("onsubmit", callback);
+    }
+  }
+</script>
