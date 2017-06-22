@@ -219,6 +219,40 @@ body {
   border-color: #2279BB;
 }
 
+.header__top {
+  width: 100%;
+  text-align: left;
+  /*display: flex;*/
+  align-items: middle;
+}
+.header__profile div {
+  padding-right: 15px;
+  text-align: center;
+}
+.header__profile a {
+  display: inline-block;
+}
+.header__profile p {
+  font-size: 22px;
+  text-align: center;
+  margin: 0;
+  vertical-align: middle;
+  line-height: 60px;
+  font-family: "Lato", 'Helvetica Neue', Helvetica, sans-serif;
+  font-weight: 600;
+}
+.header__profile img {
+  display: block;
+}
+
+.navigation__wrapper {
+  text-align: center;
+}
+.navigation__wrapper a {
+  margin-right: 15px;
+  line-height: 50px;
+}
+
 form {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 300;
@@ -335,6 +369,20 @@ h6,
     margin: 0;
     padding: 0;
     font-size: 1.25rem;
+  }
+
+  .flex {
+    display: flex;
+    align-items: middle;
+  }
+  .flex100 {
+    flex: 100;
+  }
+
+  .header__profile p,
+  .header__profile div {
+    display: inline-block;
+    text-align: left;
   }
 
   .h1,
